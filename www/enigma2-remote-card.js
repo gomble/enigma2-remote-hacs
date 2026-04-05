@@ -2,6 +2,7 @@ class Enigma2RemoteCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._pressTimers = new Map();
   }
 
   setConfig(config) {
@@ -25,15 +26,15 @@ class Enigma2RemoteCard extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         ha-card {
-          padding: 16px;
+          padding: 10px;
           background: var(--ha-card-background, var(--card-background-color, white));
           border-radius: var(--ha-card-border-radius, 12px);
         }
         
         .card-header {
-          font-size: 24px;
+          font-size: 16px;
           font-weight: 500;
-          padding-bottom: 16px;
+          padding-bottom: 8px;
           text-align: center;
           color: var(--primary-text-color);
         }
@@ -42,146 +43,171 @@ class Enigma2RemoteCard extends HTMLElement {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 16px;
-          max-width: 400px;
+          gap: 8px;
+          max-width: 280px;
           margin: 0 auto;
         }
         
         .button-row {
           display: flex;
           justify-content: center;
-          gap: 12px;
+          gap: 6px;
           width: 100%;
         }
         
         .button {
           background: var(--primary-color);
           border: none;
-          border-radius: 8px;
+          border-radius: 6px;
           color: var(--text-primary-color, white);
           cursor: pointer;
-          font-size: 16px;
+          font-size: 12px;
           font-weight: 500;
-          padding: 12px 16px;
-          transition: all 0.2s;
-          min-width: 60px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          padding: 8px 10px;
+          transition: all 0.1s;
+          min-width: 38px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+          user-select: none;
+          -webkit-user-select: none;
         }
         
         .button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          filter: brightness(1.1);
         }
         
-        .button:active {
-          transform: translateY(0);
-          box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        .button:active, .button.touch-active {
+          transform: scale(0.93);
+          filter: brightness(0.85);
+          box-shadow: 0 0 1px rgba(0,0,0,0.1);
         }
         
         .button.small {
-          padding: 8px 12px;
-          font-size: 14px;
-          min-width: 50px;
+          padding: 6px 8px;
+          font-size: 11px;
+          min-width: 34px;
         }
         
-        .button.large {
-          padding: 16px 20px;
-          font-size: 18px;
-          min-width: 70px;
-        }
-        
-        .button.round {
-          border-radius: 50%;
-          width: 60px;
-          height: 60px;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .button.color-red {
+        .button.power {
           background: #e74c3c;
+          font-size: 14px;
+          padding: 8px 20px;
+          min-width: 50px;
+          border-radius: 20px;
         }
         
-        .button.color-green {
-          background: #2ecc71;
+        .button.mute {
+          background: #e67e22;
         }
         
-        .button.color-yellow {
-          background: #f39c12;
+        .button.vol-ch {
+          font-size: 13px;
+          padding: 8px 12px;
+          min-width: 42px;
+          font-weight: 600;
         }
         
-        .button.color-blue {
-          background: #3498db;
-        }
+        .button.color-red { background: #e74c3c; }
+        .button.color-green { background: #2ecc71; }
+        .button.color-yellow { background: #f39c12; color: #333; }
+        .button.color-blue { background: #3498db; }
         
         .nav-grid {
           display: grid;
-          grid-template-columns: repeat(3, 70px);
-          grid-template-rows: repeat(3, 70px);
-          gap: 8px;
+          grid-template-columns: repeat(3, 52px);
+          grid-template-rows: repeat(3, 52px);
+          gap: 4px;
         }
         
         .nav-button {
           background: var(--primary-color);
           border: none;
-          border-radius: 8px;
+          border-radius: 6px;
           color: var(--text-primary-color, white);
           cursor: pointer;
-          font-size: 24px;
-          transition: all 0.2s;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          font-size: 18px;
+          transition: all 0.1s;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.12);
           display: flex;
           align-items: center;
           justify-content: center;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+          user-select: none;
+          -webkit-user-select: none;
         }
         
-        .nav-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        
-        .nav-button:active {
-          transform: translateY(0);
-          box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        .nav-button:active, .nav-button.touch-active {
+          transform: scale(0.93);
+          filter: brightness(0.85);
         }
         
         .nav-ok {
           background: var(--accent-color, #ff9800);
           border-radius: 50%;
           font-weight: bold;
+          font-size: 13px;
         }
         
         .number-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 8px;
+          gap: 5px;
           width: 100%;
-          max-width: 250px;
+          max-width: 200px;
+        }
+        
+        .vol-ch-grid {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          gap: 6px;
+          width: 100%;
+          max-width: 240px;
+          align-items: center;
+        }
+        
+        .vol-ch-col {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .vol-ch-label {
+          font-size: 10px;
+          font-weight: 600;
+          color: var(--secondary-text-color);
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
         }
         
         .section-title {
-          font-size: 14px;
-          font-weight: 500;
+          font-size: 10px;
+          font-weight: 600;
           color: var(--secondary-text-color);
           text-transform: uppercase;
-          letter-spacing: 0.5px;
-          margin-top: 8px;
+          letter-spacing: 0.4px;
+          margin-top: 4px;
+        }
+        
+        .divider {
+          width: 80%;
+          height: 1px;
+          background: var(--divider-color, rgba(0,0,0,0.08));
+          margin: 2px 0;
         }
         
         @media (max-width: 600px) {
+          ha-card {
+            padding: 8px;
+          }
           .remote-container {
-            gap: 12px;
+            gap: 6px;
           }
-          
-          .button-row {
-            gap: 8px;
-          }
-          
           .nav-grid {
-            grid-template-columns: repeat(3, 60px);
-            grid-template-rows: repeat(3, 60px);
+            grid-template-columns: repeat(3, 48px);
+            grid-template-rows: repeat(3, 48px);
           }
         }
       </style>
@@ -190,19 +216,31 @@ class Enigma2RemoteCard extends HTMLElement {
         <div class="card-header">${title}</div>
         <div class="remote-container">
           
-          <!-- Number Pad -->
-          <div class="section-title">Zifferntasten</div>
-          <div class="number-grid">
-            ${[1,2,3,4,5,6,7,8,9].map(num => `
-              <button class="button" data-key="KEY_${num}">${num}</button>
-            `).join('')}
-            <button class="button" data-key="KEY_HELP">?</button>
-            <button class="button" data-key="KEY_0">0</button>
-            <button class="button" data-key="KEY_TEXT">TXT</button>
+          <!-- Power -->
+          <div class="button-row">
+            <button class="button power" data-key="KEY_POWER">⏻ Standby</button>
           </div>
           
+          <div class="divider"></div>
+          
+          <!-- Volume & Channel -->
+          <div class="vol-ch-grid">
+            <div class="vol-ch-col">
+              <span class="vol-ch-label">Lautstärke</span>
+              <button class="button vol-ch" data-key="KEY_VOLUMEUP">🔊 +</button>
+              <button class="button vol-ch" data-key="KEY_VOLUMEDOWN">🔉 −</button>
+            </div>
+            <button class="button mute small" data-key="KEY_MUTE">🔇</button>
+            <div class="vol-ch-col">
+              <span class="vol-ch-label">Kanal</span>
+              <button class="button vol-ch" data-key="KEY_CHANNELUP">CH +</button>
+              <button class="button vol-ch" data-key="KEY_CHANNELDOWN">CH −</button>
+            </div>
+          </div>
+          
+          <div class="divider"></div>
+          
           <!-- Navigation -->
-          <div class="section-title">Navigation</div>
           <div class="nav-grid">
             <div></div>
             <button class="nav-button" data-key="KEY_UP">▲</button>
@@ -217,28 +255,34 @@ class Enigma2RemoteCard extends HTMLElement {
           
           <!-- Menu & Exit -->
           <div class="button-row">
-            <button class="button large" data-key="KEY_MENU">MENU</button>
-            <button class="button large" data-key="KEY_EXIT">EXIT</button>
+            <button class="button" data-key="KEY_MENU">MENU</button>
+            <button class="button" data-key="KEY_EXIT">EXIT</button>
           </div>
+          
+          <div class="divider"></div>
+          
+          <!-- Number Pad -->
+          <div class="section-title">Ziffern</div>
+          <div class="number-grid">
+            ${[1,2,3,4,5,6,7,8,9].map(num => `
+              <button class="button" data-key="KEY_${num}">${num}</button>
+            `).join('')}
+            <button class="button small" data-key="KEY_HELP">?</button>
+            <button class="button" data-key="KEY_0">0</button>
+            <button class="button small" data-key="KEY_TEXT">TXT</button>
+          </div>
+          
+          <div class="divider"></div>
           
           <!-- Color Buttons -->
-          <div class="section-title">Farbtasten</div>
           <div class="button-row">
-            <button class="button color-red" data-key="KEY_RED">●</button>
-            <button class="button color-green" data-key="KEY_GREEN">●</button>
-            <button class="button color-yellow" data-key="KEY_YELLOW">●</button>
-            <button class="button color-blue" data-key="KEY_BLUE">●</button>
-          </div>
-          
-          <!-- Channel Controls -->
-          <div class="section-title">Kanal</div>
-          <div class="button-row">
-            <button class="button" data-key="KEY_CHANNELDOWN">◀ CH</button>
-            <button class="button" data-key="KEY_CHANNELUP">CH ▶</button>
+            <button class="button color-red small" data-key="KEY_RED">●</button>
+            <button class="button color-green small" data-key="KEY_GREEN">●</button>
+            <button class="button color-yellow small" data-key="KEY_YELLOW">●</button>
+            <button class="button color-blue small" data-key="KEY_BLUE">●</button>
           </div>
           
           <!-- Additional Functions -->
-          <div class="section-title">Funktionen</div>
           <div class="button-row">
             <button class="button small" data-key="KEY_INFO">INFO</button>
             <button class="button small" data-key="KEY_EPG">EPG</button>
@@ -256,20 +300,58 @@ class Enigma2RemoteCard extends HTMLElement {
   setupEventListeners() {
     const buttons = this.shadowRoot.querySelectorAll('[data-key]');
     buttons.forEach(button => {
-      // Click event
+      let pressTimer;
+      let touchHandled = false;
+
+      // Touch events - fire immediately on touchstart for responsiveness
+      button.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        touchHandled = true;
+        button.classList.add('touch-active');
+        
+        const key = button.getAttribute('data-key');
+        
+        // Send command immediately on touch
+        this.sendCommand(key, false);
+        
+        // Also set up long-press detection
+        pressTimer = setTimeout(() => {
+          this.sendCommand(key, true);
+        }, 500);
+      }, { passive: false });
+
+      button.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        clearTimeout(pressTimer);
+        button.classList.remove('touch-active');
+        // Reset touchHandled after a short delay so click doesn't also fire
+        setTimeout(() => { touchHandled = false; }, 300);
+      }, { passive: false });
+
+      button.addEventListener('touchcancel', (e) => {
+        clearTimeout(pressTimer);
+        button.classList.remove('touch-active');
+        touchHandled = false;
+      });
+
+      // Click event for mouse/desktop
       button.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        if (touchHandled) return; // Skip if touch already handled
         const key = button.getAttribute('data-key');
         this.sendCommand(key, false);
       });
       
-      // Long press support
-      let pressTimer;
+      // Long press for mouse
       button.addEventListener('mousedown', (e) => {
+        if (touchHandled) return;
         const key = button.getAttribute('data-key');
         pressTimer = setTimeout(() => {
           this.sendCommand(key, true);
-        }, 500); // 500ms for long press
+        }, 500);
       });
       
       button.addEventListener('mouseup', () => {
@@ -277,20 +359,6 @@ class Enigma2RemoteCard extends HTMLElement {
       });
       
       button.addEventListener('mouseleave', () => {
-        clearTimeout(pressTimer);
-      });
-      
-      // Touch support for mobile
-      button.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const key = button.getAttribute('data-key');
-        pressTimer = setTimeout(() => {
-          this.sendCommand(key, true);
-        }, 500);
-      });
-      
-      button.addEventListener('touchend', (e) => {
-        e.preventDefault();
         clearTimeout(pressTimer);
       });
     });
@@ -301,36 +369,33 @@ class Enigma2RemoteCard extends HTMLElement {
     
     const entityId = this.config.entity;
     
-    // Prepare service data
     const serviceData = {
       entity_id: entityId,
       command: [key]
     };
     
-    // Add hold_secs for long press
     if (longPress) {
       serviceData.hold_secs = 1;
     }
     
-    // Call the remote.send_command service
     this._hass.callService('remote', 'send_command', serviceData);
     
-    // Visual feedback
+    // Visual feedback (brief opacity pulse)
     const button = this.shadowRoot.querySelector(`[data-key="${key}"]`);
     if (button) {
-      button.style.opacity = '0.6';
+      button.style.opacity = '0.5';
       setTimeout(() => {
         button.style.opacity = '1';
-      }, 200);
+      }, 150);
     }
   }
 
   updateState() {
-    // Could be used to update UI based on entity state if needed
+    // Could be used to update UI based on entity state
   }
 
   getCardSize() {
-    return 8;
+    return 6;
   }
 
   static getStubConfig() {

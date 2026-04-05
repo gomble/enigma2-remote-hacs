@@ -22,6 +22,14 @@ KEY_CODES = {
     "KEY_8": 9,
     "KEY_9": 10,
     
+    # Power
+    "KEY_POWER": 116,
+    
+    # Volume keys
+    "KEY_VOLUMEUP": 115,
+    "KEY_VOLUMEDOWN": 114,
+    "KEY_MUTE": 113,
+    
     # Navigation keys
     "KEY_UP": 103,
     "KEY_DOWN": 108,
@@ -38,8 +46,8 @@ KEY_CODES = {
     "KEY_BLUE": 401,
     
     # Channel keys
-    "KEY_CHANNELUP": 407,
-    "KEY_CHANNELDOWN": 412,
+    "KEY_CHANNELUP": 402,
+    "KEY_CHANNELDOWN": 403,
     
     # Additional keys
     "KEY_INFO": 358,

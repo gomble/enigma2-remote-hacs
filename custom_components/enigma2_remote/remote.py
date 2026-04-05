@@ -52,12 +52,14 @@ class Enigma2Remote(RemoteEntity):
         }
 
     async def async_turn_on(self, **kwargs):
-        """Turn the remote on (not applicable for Enigma2)."""
-        _LOGGER.debug("Turn on called, but not applicable for Enigma2 remote")
+        """Turn the device on by sending power key."""
+        _LOGGER.debug("Turn on called - sending power key")
+        await self._send_key(KEY_CODES["KEY_POWER"], long_press=False)
 
     async def async_turn_off(self, **kwargs):
-        """Turn the remote off (not applicable for Enigma2)."""
-        _LOGGER.debug("Turn off called, but not applicable for Enigma2 remote")
+        """Turn the device off by sending power key (standby)."""
+        _LOGGER.debug("Turn off called - sending power key for standby")
+        await self._send_key(KEY_CODES["KEY_POWER"], long_press=False)
 
     async def async_send_command(self, command, **kwargs):
         """Send a command to the Enigma2 device."""
