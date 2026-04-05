@@ -1,122 +1,122 @@
-# Enigma2 Remote Control Integration für Home Assistant
+# Enigma2 Remote Control Integration for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![GitHub Release](https://img.shields.io/github/release/yourusername/enigma2_remote.svg)](https://github.com/yourusername/enigma2_remote/releases)
-[![License](https://img.shields.io/github/license/yourusername/enigma2_remote.svg)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/release/gomble/enigma2-remote-hacs.svg)](https://github.com/gomble/enigma2-remote-hacs/releases)
+[![License](https://img.shields.io/github/license/gomble/enigma2-remote-hacs.svg)](LICENSE)
 
-Eine vollständige Home Assistant Integration zur Steuerung von Enigma2 Set-Top-Boxen (z.B. Dreambox, VU+) über die OpenWebif API.
+A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g. Dreambox, VU+) via the OpenWebif API.
 
 ## ✨ Features
 
-- 🎮 **Vollständige Fernbedienung** - Alle wichtigen Tasten implementiert
-- 🖥️ **Moderne Lovelace Card** - Schönes, responsives Design für alle Geräte
-- ⚙️ **Config Flow** - Einfache Einrichtung über die Home Assistant UI
-- 🔘 **Lange Tastendrücke** - Unterstützung für Hold-Funktionen (500ms)
-- 🌐 **OpenWebif API** - Nutzt die Standard-API, keine zusätzliche Software erforderlich
-- 🔓 **Keine Authentifizierung** - Funktioniert direkt ohne Login
+- 🎮 **Full Remote Control** — All essential buttons implemented
+- 🖥️ **Modern Lovelace Card** — Beautiful, responsive design for all devices
+- ⚙️ **Config Flow** — Easy setup through the Home Assistant UI
+- 🔘 **Long Key Presses** — Hold-function support (500 ms)
+- 🌐 **OpenWebif API** — Uses the standard API, no additional software required
+- 🔓 **No Authentication** — Works out of the box without login
 
-## 📋 Voraussetzungen
+## 📋 Prerequisites
 
-- Home Assistant 2023.1.0 oder höher
-- Enigma2 Set-Top-Box mit aktiviertem OpenWebif
-- Netzwerkverbindung zwischen Home Assistant und der Box
+- Home Assistant 2023.1.0 or later
+- Enigma2 set-top box with OpenWebif enabled
+- Network connectivity between Home Assistant and the box
 
 ## 🚀 Installation
 
-### Installation über HACS (empfohlen)
+### Via HACS (recommended)
 
-1. Öffne HACS in Home Assistant
-2. Klicke auf "Integrationen"
-3. Klicke auf die drei Punkte (⋮) oben rechts
-4. Wähle "Benutzerdefinierte Repositories"
-5. Füge die URL hinzu: `https://github.com/yourusername/enigma2_remote`
-6. Kategorie: "Integration"
-7. Klicke auf "Hinzufügen"
-8. Suche nach "Enigma2 Remote Control" und klicke auf "Herunterladen"
-9. Starte Home Assistant neu
+1. Open HACS in Home Assistant
+2. Click **Integrations**
+3. Click the three-dot menu (⋮) in the top-right corner
+4. Select **Custom repositories**
+5. Add the URL: `https://github.com/gomble/enigma2-remote-hacs`
+6. Category: **Integration**
+7. Click **Add**
+8. Search for "Enigma2 Remote Control" and click **Download**
+9. Restart Home Assistant
 
-### Manuelle Installation
+### Manual Installation
 
-1. Lade die neueste Version von [Releases](https://github.com/yourusername/enigma2_remote/releases) herunter
-2. Entpacke das Archiv
-3. Kopiere den Ordner `custom_components/enigma2_remote` nach `<config>/custom_components/`
-4. Kopiere die Datei `www/enigma2-remote-card.js` nach `<config>/www/`
-5. Starte Home Assistant neu
+1. Download the latest version from [Releases](https://github.com/gomble/enigma2-remote-hacs/releases)
+2. Extract the archive
+3. Copy the folder `custom_components/enigma2_remote` to `<config>/custom_components/`
+4. Copy the file `www/enigma2-remote-card.js` to `<config>/www/`
+5. Restart Home Assistant
 
-## ⚙️ Konfiguration
+## ⚙️ Configuration
 
-### Integration hinzufügen
+### Adding the Integration
 
-1. Gehe zu **Einstellungen** → **Geräte & Dienste**
-2. Klicke auf **+ Integration hinzufügen**
-3. Suche nach "Enigma2 Remote Control"
-4. Gib die IP-Adresse deiner Enigma2 Box ein
-5. Gib den Port ein (Standard: 80)
-6. Klicke auf **Senden**
+1. Go to **Settings** → **Devices & Services**
+2. Click **+ Add Integration**
+3. Search for "Enigma2 Remote Control"
+4. Enter the IP address of your Enigma2 box
+5. Enter the port (default: 80)
+6. Click **Submit**
 
-Die Integration erstellt automatisch eine Remote Entity mit dem Namen `remote.enigma2_remote_<ip_adresse>`.
+The integration automatically creates a Remote entity named `remote.enigma2_remote_<ip_address>`.
 
-### Lovelace Card hinzufügen
+### Adding the Lovelace Card
 
-#### Über die UI (empfohlen)
+#### Via the UI (recommended)
 
-1. Bearbeite dein Dashboard
-2. Klicke auf **+ Karte hinzufügen**
-3. Scrolle nach unten und wähle **Benutzerdefiniert: Enigma2 Remote Card**
-4. Konfiguriere die Karte:
+1. Edit your dashboard
+2. Click **+ Add Card**
+3. Scroll down and select **Custom: Enigma2 Remote Card**
+4. Configure the card:
 
 ```yaml
 type: custom:enigma2-remote-card
 entity: remote.enigma2_remote_192_168_1_100
-name: Wohnzimmer TV
+name: Living Room TV
 ```
 
-#### Manuell (YAML)
+#### Manually (YAML)
 
-Füge die Ressource in der Lovelace-Konfiguration hinzu (falls noch nicht automatisch hinzugefügt):
+Add the resource in your Lovelace configuration (if not already added automatically):
 
-**Einstellungen** → **Dashboards** → **⋮** → **Ressourcen**
+**Settings** → **Dashboards** → **⋮** → **Resources**
 
 - URL: `/local/enigma2-remote-card.js`
-- Ressourcentyp: JavaScript-Modul
+- Resource type: JavaScript Module
 
-Danach kannst du die Card zu deinem Dashboard hinzufügen:
+Then add the card to your dashboard:
 
 ```yaml
 type: custom:enigma2-remote-card
 entity: remote.enigma2_remote_192_168_1_100
-name: Meine Enigma2 Box
+name: My Enigma2 Box
 ```
 
-## 🎮 Unterstützte Tasten
+## 🎮 Supported Keys
 
-### Zifferntasten
+### Number Keys
 `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`
 
 ### Navigation
-- **Pfeiltasten**: `KEY_UP`, `KEY_DOWN`, `KEY_LEFT`, `KEY_RIGHT`
+- **Arrow keys**: `KEY_UP`, `KEY_DOWN`, `KEY_LEFT`, `KEY_RIGHT`
 - **OK**: `KEY_OK`
 - **Menu**: `KEY_MENU`
 - **Exit**: `KEY_EXIT`
 
-### Farbtasten
+### Color Keys
 `KEY_RED`, `KEY_GREEN`, `KEY_YELLOW`, `KEY_BLUE`
 
-### Kanaltasten
-- **Kanal vor**: `KEY_CHANNELUP`
-- **Kanal zurück**: `KEY_CHANNELDOWN`
+### Channel Keys
+- **Channel up**: `KEY_CHANNELUP`
+- **Channel down**: `KEY_CHANNELDOWN`
 
-### Zusätzliche Funktionen
+### Additional Functions
 - **Info**: `KEY_INFO`
 - **EPG**: `KEY_EPG` (Electronic Program Guide)
-- **PVR**: `KEY_PVR` (Aufnahmen)
+- **PVR**: `KEY_PVR` (Recordings)
 - **TV**: `KEY_TV`
-- **Text**: `KEY_TEXT` (Videotext)
-- **Hilfe**: `KEY_HELP`
+- **Text**: `KEY_TEXT` (Teletext)
+- **Help**: `KEY_HELP`
 
-## 🤖 Verwendung in Automatisierungen
+## 🤖 Usage in Automations
 
-Du kannst die Remote Entity in Automatisierungen und Skripten verwenden:
+You can use the Remote entity in automations and scripts:
 
 ```yaml
 service: remote.send_command
@@ -126,7 +126,7 @@ data:
   command: KEY_CHANNELUP
 ```
 
-### Lange Tastendrücke
+### Long Key Presses
 
 ```yaml
 service: remote.send_command
@@ -137,7 +137,7 @@ data:
   hold_secs: 1
 ```
 
-### Mehrere Tasten nacheinander
+### Multiple Keys in Sequence
 
 ```yaml
 service: remote.send_command
@@ -153,102 +153,99 @@ data:
 
 ## 📱 Screenshots
 
-Die Lovelace Card zeigt eine übersichtliche Fernbedienung mit:
-- Zifferntasten (0-9)
-- Navigationstasten (Pfeile + OK)
-- Menu und Exit
-- Farbtasten (Rot, Grün, Gelb, Blau)
-- Kanaltasten
-- Zusatzfunktionen (Info, EPG, PVR, TV)
+The Lovelace card displays a clean remote control with:
+- Number keys (0–9)
+- Navigation keys (arrows + OK)
+- Menu and Exit
+- Color keys (Red, Green, Yellow, Blue)
+- Channel keys
+- Additional functions (Info, EPG, PVR, TV)
 
-Das Design passt sich automatisch an das Home Assistant Theme an und ist voll responsive.
+The design automatically adapts to your Home Assistant theme and is fully responsive.
 
-## 🔧 Fehlerbehebung
+## 🔧 Troubleshooting
 
-### Integration kann nicht hinzugefügt werden
+### Cannot Add the Integration
 
-- Stelle sicher, dass OpenWebif auf der Enigma2 Box aktiviert ist
-- Überprüfe die IP-Adresse und den Port
-- Teste die Verbindung: `http://<ip>:<port>/api/about`
+- Make sure OpenWebif is enabled on your Enigma2 box
+- Verify the IP address and port
+- Test the connection: `http://<ip>:<port>/api/about`
 
-### Tasten funktionieren nicht
+### Keys Are Not Working
 
-- Überprüfe die Logs in Home Assistant: **Einstellungen** → **System** → **Protokolle**
-- Stelle sicher, dass die Box erreichbar ist
-- Teste die API direkt: `http://<ip>:<port>/api/remotecontrol?command=103`
+- Check the logs in Home Assistant: **Settings** → **System** → **Logs**
+- Ensure the box is reachable on the network
+- Test the API directly: `http://<ip>:<port>/api/remotecontrol?command=103`
 
-### Card wird nicht angezeigt
+### Card Is Not Displayed
 
-- Stelle sicher, dass die Ressource hinzugefügt wurde
-- Leere den Browser-Cache (Strg+F5)
-- Überprüfe die Browser-Konsole auf Fehler
+- Make sure the resource has been added
+- Clear your browser cache (Ctrl+F5)
+- Check the browser console for errors
 
-## 🛠️ Entwicklung
+## 🛠️ Development
 
-### Projektstruktur
+### Project Structure
 
 ```
 enigma2_remote/
 ├── custom_components/
 │   └── enigma2_remote/
-│       ├── __init__.py              # Integration Setup
-│       ├── manifest.json            # Integration Manifest
-│       ├── config_flow.py           # UI Configuration Flow
-│       ├── remote.py                # Remote Entity Platform
+│       ├── __init__.py              # Integration setup
+│       ├── manifest.json            # Integration manifest
+│       ├── config_flow.py           # UI configuration flow
+│       ├── remote.py                # Remote entity platform
 │       ├── const.py                 # Constants
-│       ├── strings.json             # UI Strings
+│       ├── strings.json             # UI strings
 │       └── translations/
-│           └── en.json              # English Translations
+│           └── en.json              # English translations
 ├── www/
-│   └── enigma2-remote-card.js       # Lovelace Custom Card
-├── README.md                        # Diese Datei
-├── hacs.json                        # HACS Manifest
-└── info.md                          # HACS Store Description
+│   └── enigma2-remote-card.js       # Lovelace custom card
+├── README.md                        # This file
+├── hacs.json                        # HACS manifest
+├── LICENSE                          # MIT License
+└── info.md                          # HACS store description
 ```
 
-### Lokales Testen
+### Local Testing
 
-1. Klone das Repository
-2. Kopiere `custom_components/enigma2_remote` nach `<ha_config>/custom_components/`
-3. Kopiere `www/enigma2-remote-card.js` nach `<ha_config>/www/`
-4. Starte Home Assistant neu
+1. Clone the repository
+2. Copy `custom_components/enigma2_remote` to `<ha_config>/custom_components/`
+3. Copy `www/enigma2-remote-card.js` to `<ha_config>/www/`
+4. Restart Home Assistant
 
-## 📝 API Referenz
+## 📝 API Reference
 
-Die Integration nutzt die OpenWebif API:
+The integration uses the OpenWebif API:
 
-- **Tastendruck**: `GET /api/remotecontrol?command=<code>`
-- **Langer Tastendruck**: `GET /api/remotecontrol?type=long&command=<code>`
+- **Key press**: `GET /api/remotecontrol?command=<code>`
+- **Long key press**: `GET /api/remotecontrol?type=long&command=<code>`
 
-Tastencodes sind in `const.py` definiert.
+Key codes are defined in `const.py`.
 
-## 🤝 Beitragen
+## 🤝 Contributing
 
-Beiträge sind willkommen! Bitte:
+Contributions are welcome! Please:
 
-1. Forke das Repository
-2. Erstelle einen Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Committe deine Änderungen (`git commit -m 'Add some AmazingFeature'`)
-4. Pushe zum Branch (`git push origin feature/AmazingFeature`)
-5. Öffne einen Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📄 Lizenz
+## 📄 License
 
-Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe [LICENSE](LICENSE) für Details.
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
 
-## 🙏 Danksagungen
+## 🙏 Acknowledgments
 
 - Home Assistant Community
-- OpenWebif Entwickler
-- Enigma2 Entwickler
+- OpenWebif Developers
+- Enigma2 Developers
 
 ## 📞 Support
 
-Bei Fragen oder Problemen:
+For questions or issues:
 
-- 🐛 [Erstelle ein Issue](https://github.com/yourusername/enigma2_remote/issues)
-- 💬 [Diskussionen](https://github.com/yourusername/enigma2_remote/discussions)
-
----
-
-**Hinweis**: Ersetze `yourusername` mit deinem GitHub-Benutzernamen, bevor du das Repository veröffentlichst.
+- 🐛 [Create an Issue](https://github.com/gomble/enigma2-remote-hacs/issues)
+- 💬 [Discussions](https://github.com/gomble/enigma2-remote-hacs/discussions)

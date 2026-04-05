@@ -1,52 +1,52 @@
 # Enigma2 Remote Control Integration
 
-Eine vollständige Home Assistant Integration zur Steuerung von Enigma2 Set-Top-Boxen über die OpenWebif API.
+A complete Home Assistant integration for controlling Enigma2 set-top boxes via the OpenWebif API.
 
 ## Features
 
-✅ **Einfache Einrichtung** - Config Flow für komfortable Konfiguration über die UI  
-✅ **Vollständige Fernbedienung** - Alle wichtigen Tasten implementiert  
-✅ **Moderne Lovelace Card** - Schönes, responsives Design  
-✅ **Lange Tastendrücke** - Unterstützung für Hold-Funktionen  
-✅ **Keine Authentifizierung** - Funktioniert direkt mit OpenWebif  
+✅ **Easy Setup** — Config Flow for convenient configuration through the UI  
+✅ **Full Remote Control** — All essential buttons implemented  
+✅ **Modern Lovelace Card** — Beautiful, responsive design  
+✅ **Long Key Presses** — Hold-function support  
+✅ **No Authentication** — Works directly with OpenWebif  
 
-## Unterstützte Tasten
+## Supported Keys
 
-### Zifferntasten
-0-9, Text, Hilfe
+### Number Keys
+0–9, Text, Help
 
 ### Navigation
-Hoch, Runter, Links, Rechts, OK, Menu, Exit
+Up, Down, Left, Right, OK, Menu, Exit
 
-### Farbtasten
-Rot, Grün, Gelb, Blau
+### Color Keys
+Red, Green, Yellow, Blue
 
-### Kanaltasten
-Kanal vor, Kanal zurück
+### Channel Keys
+Channel up, Channel down
 
-### Zusätzliche Funktionen
+### Additional Functions
 Info, EPG, PVR, TV
 
-## Voraussetzungen
+## Prerequisites
 
-- Home Assistant 2023.1.0 oder höher
-- Enigma2 Set-Top-Box mit aktiviertem OpenWebif
-- Netzwerkverbindung zwischen Home Assistant und der Box
+- Home Assistant 2023.1.0 or later
+- Enigma2 set-top box with OpenWebif enabled
+- Network connectivity between Home Assistant and the box
 
-## Verwendung
+## Usage
 
-Nach der Installation:
+After installation:
 
-1. Füge die Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen** hinzu
-2. Gib die IP-Adresse und den Port (Standard: 80) deiner Enigma2 Box ein
-3. Füge die Lovelace Card zu deinem Dashboard hinzu:
+1. Add the integration via **Settings → Devices & Services → Add Integration**
+2. Enter the IP address and port (default: 80) of your Enigma2 box
+3. Add the Lovelace card to your dashboard:
 
 ```yaml
 type: custom:enigma2-remote-card
 entity: remote.enigma2_remote_192_168_1_100
-name: Meine Enigma2 Box
+name: My Enigma2 Box
 ```
 
 ## Support
 
-Bei Fragen oder Problemen erstelle bitte ein Issue auf GitHub.
+For questions or issues, please create an issue on GitHub.
