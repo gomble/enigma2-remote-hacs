@@ -1,0 +1,7 @@
+{
+  "name": "Enigma2 Remote Control",
+  "content_in_root": false,
+  "render_readme": true,
+  "domains": ["remote"],
+  "homeassistant": "2023.1.0"
+}

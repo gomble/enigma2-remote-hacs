@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 Remote Control Setup",
+        "description": "Enter the connection details for your Enigma2 device.",
+        "data": {
+          "host": "IP Address or Hostname",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the Enigma2 device. Please check the IP address and port.",
+      "unknown": "An unknown error occurred."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  }
+}
