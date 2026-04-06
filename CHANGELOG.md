@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.1 - Version bump & README fix
+
+### Changes
+- Bumped `manifest.json` version from `1.1.0` to `1.1.1`
+- Fixed GitHub Release badge in README (was showing stale v1.0.3)
+
+---
+
 ## v1.1.0 - Power State Control & UI Improvements
 
 ### Power State Control
