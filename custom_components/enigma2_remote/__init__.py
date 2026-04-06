@@ -5,7 +5,6 @@ import os
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.const import Platform
-from homeassistant.components.frontend import async_register_built_in_panel
 from homeassistant.components.lovelace.resources import (
     ResourceStorageCollection,
 )
@@ -31,10 +30,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         should_register = False
 
     if should_register and os.path.isfile(CARD_PATH):
-        hass.http.register_static_path(
-            CARD_URL,
-            CARD_PATH,
-            cache_headers=False,
+        from homeassistant.components.http import StaticPathConfig
+
+        await hass.http.async_register_static_paths(
+            [StaticPathConfig(CARD_URL, CARD_PATH, cache_headers=False)]
         )
         hass.data[DOMAIN]["_card_registered"] = True
         _LOGGER.info(

@@ -1,12 +1,25 @@
 # Changelog
 
+## v1.0.3 - Fix: Correct async method for static path registration
+
+### Bug Fix
+- **Fixed `AttributeError`**: `HomeAssistantHTTP` object has no attribute `register_static_path`
+- Changed `hass.http.register_static_path()` → `await hass.http.async_register_static_paths()` using `StaticPathConfig`
+- Removed unused import `async_register_built_in_panel`
+- Compatible with Home Assistant 2024.x+ which removed the synchronous `register_static_path` method
+
+### Version
+- Bumped `manifest.json` version from `1.0.2` to `1.0.3`
+
+---
+
 ## v1.0.2 - Fix: Auto-register Lovelace Card, correct repository URLs
 
 ### Lovelace Card Auto-Registration
 - The Lovelace card (`enigma2-remote-card.js`) is now **automatically registered** when the integration is set up
 - No manual resource configuration required — the card is available immediately after HACS installation
 - Card JS file is now also included under `custom_components/enigma2_remote/www/` for reliable static path serving
-- Uses `hass.http.register_static_path()` and Lovelace resource registration with fallback to `frontend_extra_module_url`
+- Uses `hass.http.async_register_static_paths()` and Lovelace resource registration with fallback to `frontend_extra_module_url`
 
 ### Repository URL Corrections
 - Fixed `manifest.json`:
