@@ -6,6 +6,6 @@
   "documentation": "https://github.com/yourusername/enigma2_remote",
   "issue_tracker": "https://github.com/yourusername/enigma2_remote/issues",
   "requirements": [],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "iot_class": "local_polling"
 }
