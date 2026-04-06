@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.2.0 - Redesigned Lovelace Card (LG WebOS style)
+
+### Lovelace Card Redesign
+- Complete visual redesign inspired by [LG WebOS Remote Control](https://github.com/madmicio/LG-WebOS-Remote-Control)
+- **Proportional scaling** via `--remotewidth` CSS variable (configurable via `width:` in card config)
+- **Bordered remote body** (`.page`) with rounded corners — looks like a real remote
+- **CSS custom properties** for full theming support:
+  - `--custom-btn-color` — button background
+  - `--custom-btn-text` — button text/icon color
+  - `--custom-border-color` — remote border color
+  - `--custom-border-width` — remote border width
+- **Connected 3×3 Vol/CH block**: CH+/CH−, MENU/INFO/BACK, VOL+/VOL−, MUTE (orange center) — all touching with position-specific border-radius
+- **Circular navigation D-pad**: UP/DOWN/LEFT/RIGHT (circular), OK (orange accent, circular)
+- **Circular color buttons**: RED/GREEN/YELLOW/BLUE
+- **Circular media controls**: ⏪ ▶ ⏸ ⏹ ⏩
+- **Ripple animation** on every button press
+- **Long-press support** (500 ms → hold_secs: 1) on all buttons
+- Both `www/` and `custom_components/enigma2_remote/www/` are now always in sync
+
+### Version
+- Bumped `manifest.json` version from `1.1.2` to `1.2.0`
+
+---
+
 ## v1.1.2 - Fix: Lovelace card sync
 
 ### Bug Fix
