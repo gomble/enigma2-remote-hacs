@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.1.2 - Fix: Lovelace card sync
+
+### Bug Fix
+- **Lovelace card in HA war veraltet**: `custom_components/enigma2_remote/www/enigma2-remote-card.js` war noch die v1.0.x Version
+- Fehlende Power State Buttons (POWER_STATE_0–5) und UI-Vergrößerungen aus v1.1.0 sind jetzt aktiv
+- Beide JS-Dateien (`www/` und `custom_components/enigma2_remote/www/`) sind jetzt synchron
+- Bumped `manifest.json` version to `1.1.2`
+
+---
+
 ## v1.1.1 - Version bump & README fix
 
 ### Changes
