@@ -1,11 +1,11 @@
 {
   "domain": "enigma2_remote",
   "name": "Enigma2 Remote Control",
-  "codeowners": ["@yourusername"],
+  "codeowners": ["@gomble"],
   "config_flow": true,
-  "documentation": "https://github.com/yourusername/enigma2_remote",
-  "issue_tracker": "https://github.com/yourusername/enigma2_remote/issues",
+  "documentation": "https://github.com/gomble/enigma2-remote-hacs",
+  "issue_tracker": "https://github.com/gomble/enigma2-remote-hacs/issues",
   "requirements": [],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "iot_class": "local_polling"
 }

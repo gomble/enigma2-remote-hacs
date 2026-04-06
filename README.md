@@ -58,6 +58,8 @@ The integration automatically creates a Remote entity named `remote.enigma2_remo
 
 ### Adding the Lovelace Card
 
+The Lovelace card is **automatically registered** when the integration is installed via HACS. No manual resource configuration needed!
+
 #### Via the UI (recommended)
 
 1. Edit your dashboard
@@ -73,11 +75,11 @@ name: Living Room TV
 
 #### Manually (YAML)
 
-Add the resource in your Lovelace configuration (if not already added automatically):
+If the card is not auto-detected, add the resource in your Lovelace configuration:
 
 **Settings** → **Dashboards** → **⋮** → **Resources**
 
-- URL: `/local/enigma2-remote-card.js`
+- URL: `/enigma2_remote/enigma2-remote-card.js`
 - Resource type: JavaScript Module
 
 Then add the card to your dashboard:
@@ -197,8 +199,10 @@ enigma2_remote/
 │       ├── remote.py                # Remote entity platform
 │       ├── const.py                 # Constants
 │       ├── strings.json             # UI strings
-│       └── translations/
-│           └── en.json              # English translations
+│       ├── translations/
+│       │   └── en.json              # English translations
+│       └── www/
+│           └── enigma2-remote-card.js  # Lovelace card (auto-registered)
 ├── www/
 │   └── enigma2-remote-card.js       # Lovelace custom card
 ├── README.md                        # This file

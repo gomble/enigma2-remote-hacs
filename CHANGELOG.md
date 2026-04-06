@@ -1,5 +1,27 @@
 # Changelog
 
+## v1.0.2 - Fix: Auto-register Lovelace Card, correct repository URLs
+
+### Lovelace Card Auto-Registration
+- The Lovelace card (`enigma2-remote-card.js`) is now **automatically registered** when the integration is set up
+- No manual resource configuration required — the card is available immediately after HACS installation
+- Card JS file is now also included under `custom_components/enigma2_remote/www/` for reliable static path serving
+- Uses `hass.http.register_static_path()` and Lovelace resource registration with fallback to `frontend_extra_module_url`
+
+### Repository URL Corrections
+- Fixed `manifest.json`:
+  - `codeowners`: `@yourusername` → `@gomble`
+  - `documentation`: corrected to `https://github.com/gomble/enigma2-remote-hacs`
+  - `issue_tracker`: corrected to `https://github.com/gomble/enigma2-remote-hacs/issues`
+
+### HACS Configuration
+- Updated `hacs.json` with `filename` field for proper card detection
+
+### Version
+- Bumped `manifest.json` version from `1.0.1` to `1.0.2`
+
+---
+
 ## v1.0.1 - Fix: Korrekte Tastencodes aus OpenWebif
 
 ### Quelle der korrekten Codes
