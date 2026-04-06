@@ -10,6 +10,7 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 
 - 🎮 **Full Remote Control** — All essential buttons implemented
 - 🖥️ **Modern Lovelace Card** — Beautiful, responsive design for all devices
+- ⏻ **Power State Control** — All 6 OpenWebif power options (Standby Umschalten, Ausschalten, Receiver Neustart, GUI Neustart, Wake Up, Standby)
 - ⚙️ **Config Flow** — Easy setup through the Home Assistant UI
 - 🔘 **Long Key Presses** — Hold-function support (500 ms)
 - 🌐 **OpenWebif API** — Uses the standard API, no additional software required
@@ -92,6 +93,18 @@ name: My Enigma2 Box
 
 ## 🎮 Supported Keys
 
+### Power State Commands
+The integration supports all 6 OpenWebif power states via the `/api/powerstate` endpoint:
+
+| Command | Description |
+|---------|-------------|
+| `POWER_STATE_0` | Standby Umschalten (Toggle Standby) |
+| `POWER_STATE_1` | Ausschalten (Deep Standby / Shutdown) |
+| `POWER_STATE_2` | Receiver neustarten (Reboot) |
+| `POWER_STATE_3` | GUI neustarten (Restart GUI) |
+| `POWER_STATE_4` | Wake Up |
+| `POWER_STATE_5` | Standby |
+
 ### Number Keys
 `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`
 
@@ -119,6 +132,18 @@ name: My Enigma2 Box
 ## 🤖 Usage in Automations
 
 You can use the Remote entity in automations and scripts:
+
+### Power State Control
+
+```yaml
+service: remote.send_command
+target:
+  entity_id: remote.enigma2_remote_192_168_1_100
+data:
+  command: POWER_STATE_0
+```
+
+### Key Press
 
 ```yaml
 service: remote.send_command
@@ -156,12 +181,14 @@ data:
 ## 📱 Screenshots
 
 The Lovelace card displays a clean remote control with:
+- Power state controls (Standby Umschalten, Ausschalten, Receiver Neustart, GUI Neustart, Wake Up, Standby)
 - Number keys (0–9)
 - Navigation keys (arrows + OK)
 - Menu and Exit
 - Color keys (Red, Green, Yellow, Blue)
 - Channel keys
-- Additional functions (Info, EPG, PVR, TV)
+- Additional functions (Info, EPG, List, TV)
+- Media controls (Rewind, Play, Pause, Stop, Fast Forward)
 
 The design automatically adapts to your Home Assistant theme and is fully responsive.
 
@@ -224,6 +251,7 @@ The integration uses the OpenWebif API:
 
 - **Key press**: `GET /api/remotecontrol?command=<code>`
 - **Long key press**: `GET /api/remotecontrol?type=long&command=<code>`
+- **Power state**: `GET /api/powerstate?newstate=<0-5>`
 
 Key codes are defined in `const.py`.
 

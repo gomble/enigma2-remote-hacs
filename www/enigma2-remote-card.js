@@ -26,15 +26,15 @@ class Enigma2RemoteCard extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         ha-card {
-          padding: 6px;
+          padding: 12px;
           background: var(--ha-card-background, var(--card-background-color, white));
-          border-radius: var(--ha-card-border-radius, 10px);
+          border-radius: var(--ha-card-border-radius, 12px);
         }
         
         .card-header {
-          font-size: 13px;
+          font-size: 16px;
           font-weight: 500;
-          padding-bottom: 5px;
+          padding-bottom: 8px;
           text-align: center;
           color: var(--primary-text-color);
         }
@@ -43,29 +43,29 @@ class Enigma2RemoteCard extends HTMLElement {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 5px;
-          max-width: 250px;
+          gap: 8px;
+          max-width: 320px;
           margin: 0 auto;
         }
         
         .button-row {
           display: flex;
           justify-content: center;
-          gap: 4px;
+          gap: 6px;
           width: 100%;
         }
         
         .button {
           background: var(--primary-color);
           border: none;
-          border-radius: 5px;
+          border-radius: 6px;
           color: var(--text-primary-color, white);
           cursor: pointer;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 500;
-          padding: 5px 6px;
+          padding: 8px 10px;
           transition: all 0.1s;
-          min-width: 32px;
+          min-width: 40px;
           box-shadow: 0 1px 2px rgba(0,0,0,0.12);
           -webkit-tap-highlight-color: transparent;
           touch-action: manipulation;
@@ -84,29 +84,37 @@ class Enigma2RemoteCard extends HTMLElement {
         }
         
         .button.small {
-          padding: 4px 5px;
-          font-size: 10px;
-          min-width: 28px;
+          padding: 6px 8px;
+          font-size: 12px;
+          min-width: 36px;
         }
         
         .button.power {
           background: #e74c3c;
-          font-size: 12px;
-          padding: 5px 14px;
+          font-size: 13px;
+          padding: 8px 14px;
           min-width: 40px;
           border-radius: 16px;
+        }
+
+        .button.power-option {
+          background: #c0392b;
+          font-size: 11px;
+          padding: 6px 8px;
+          min-width: 36px;
+          border-radius: 6px;
         }
         
         .button.mute {
           background: #e67e22;
-          font-size: 13px;
-          padding: 5px 8px;
+          font-size: 15px;
+          padding: 8px 12px;
         }
         
         .button.vol-ch {
-          font-size: 11px;
-          padding: 5px 8px;
-          min-width: 36px;
+          font-size: 13px;
+          padding: 8px 12px;
+          min-width: 44px;
           font-weight: 600;
         }
         
@@ -117,18 +125,18 @@ class Enigma2RemoteCard extends HTMLElement {
         
         .nav-grid {
           display: grid;
-          grid-template-columns: repeat(3, 44px);
-          grid-template-rows: repeat(3, 44px);
-          gap: 3px;
+          grid-template-columns: repeat(3, 54px);
+          grid-template-rows: repeat(3, 54px);
+          gap: 4px;
         }
         
         .nav-button {
           background: var(--primary-color);
           border: none;
-          border-radius: 5px;
+          border-radius: 6px;
           color: var(--text-primary-color, white);
           cursor: pointer;
-          font-size: 16px;
+          font-size: 18px;
           transition: all 0.1s;
           box-shadow: 0 1px 2px rgba(0,0,0,0.12);
           display: flex;
@@ -149,23 +157,23 @@ class Enigma2RemoteCard extends HTMLElement {
           background: var(--accent-color, #ff9800);
           border-radius: 50%;
           font-weight: bold;
-          font-size: 11px;
+          font-size: 13px;
         }
         
         .number-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 3px;
+          gap: 4px;
           width: 100%;
-          max-width: 170px;
+          max-width: 210px;
         }
         
         .vol-ch-grid {
           display: grid;
           grid-template-columns: 1fr auto 1fr;
-          gap: 4px;
+          gap: 6px;
           width: 100%;
-          max-width: 220px;
+          max-width: 280px;
           align-items: center;
         }
         
@@ -173,11 +181,11 @@ class Enigma2RemoteCard extends HTMLElement {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 3px;
+          gap: 4px;
         }
         
         .vol-ch-label {
-          font-size: 9px;
+          font-size: 10px;
           font-weight: 600;
           color: var(--secondary-text-color);
           text-transform: uppercase;
@@ -185,31 +193,39 @@ class Enigma2RemoteCard extends HTMLElement {
         }
         
         .section-title {
-          font-size: 9px;
+          font-size: 10px;
           font-weight: 600;
           color: var(--secondary-text-color);
           text-transform: uppercase;
           letter-spacing: 0.4px;
-          margin-top: 2px;
+          margin-top: 3px;
         }
         
         .divider {
           width: 80%;
           height: 1px;
           background: var(--divider-color, rgba(0,0,0,0.08));
-          margin: 1px 0;
+          margin: 2px 0;
+        }
+
+        .power-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 4px;
+          width: 100%;
+          max-width: 280px;
         }
         
         @media (max-width: 600px) {
           ha-card {
-            padding: 5px;
+            padding: 8px;
           }
           .remote-container {
-            gap: 4px;
+            gap: 6px;
           }
           .nav-grid {
-            grid-template-columns: repeat(3, 40px);
-            grid-template-rows: repeat(3, 40px);
+            grid-template-columns: repeat(3, 48px);
+            grid-template-rows: repeat(3, 48px);
           }
         }
       </style>
@@ -220,7 +236,14 @@ class Enigma2RemoteCard extends HTMLElement {
           
           <!-- Power -->
           <div class="button-row">
-            <button class="button power" data-key="KEY_POWER">⏻ Power</button>
+            <button class="button power" data-command="POWER_STATE_0">⏻ Standby Umschalten</button>
+          </div>
+          <div class="power-grid">
+            <button class="button power-option" data-command="POWER_STATE_1">Ausschalten</button>
+            <button class="button power-option" data-command="POWER_STATE_2">Receiver Neustart</button>
+            <button class="button power-option" data-command="POWER_STATE_3">GUI Neustart</button>
+            <button class="button power-option" data-command="POWER_STATE_4">Wake Up</button>
+            <button class="button power-option" data-command="POWER_STATE_5">Standby</button>
           </div>
           
           <div class="divider"></div>
@@ -310,24 +333,21 @@ class Enigma2RemoteCard extends HTMLElement {
   }
 
   setupEventListeners() {
-    const buttons = this.shadowRoot.querySelectorAll('[data-key]');
+    const buttons = this.shadowRoot.querySelectorAll('[data-key], [data-command]');
     buttons.forEach(button => {
       let pressTimer;
       let touchHandled = false;
 
-      // Touch events - fire immediately on touchstart for responsiveness
       button.addEventListener('touchstart', (e) => {
         e.preventDefault();
         e.stopPropagation();
         touchHandled = true;
         button.classList.add('touch-active');
         
-        const key = button.getAttribute('data-key');
+        const key = button.getAttribute('data-key') || button.getAttribute('data-command');
         
-        // Send command immediately on touch
         this.sendCommand(key, false);
         
-        // Also set up long-press detection
         pressTimer = setTimeout(() => {
           this.sendCommand(key, true);
         }, 500);
@@ -347,19 +367,17 @@ class Enigma2RemoteCard extends HTMLElement {
         touchHandled = false;
       });
 
-      // Click event for mouse/desktop
       button.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         if (touchHandled) return;
-        const key = button.getAttribute('data-key');
+        const key = button.getAttribute('data-key') || button.getAttribute('data-command');
         this.sendCommand(key, false);
       });
       
-      // Long press for mouse
       button.addEventListener('mousedown', (e) => {
         if (touchHandled) return;
-        const key = button.getAttribute('data-key');
+        const key = button.getAttribute('data-key') || button.getAttribute('data-command');
         pressTimer = setTimeout(() => {
           this.sendCommand(key, true);
         }, 500);
@@ -392,7 +410,7 @@ class Enigma2RemoteCard extends HTMLElement {
     this._hass.callService('remote', 'send_command', serviceData);
     
     // Visual feedback
-    const button = this.shadowRoot.querySelector(`[data-key="${key}"]`);
+    const button = this.shadowRoot.querySelector(`[data-key="${key}"]`) || this.shadowRoot.querySelector(`[data-command="${key}"]`);
     if (button) {
       button.style.opacity = '0.5';
       setTimeout(() => {

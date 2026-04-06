@@ -1,5 +1,33 @@
 # Changelog
 
+## v1.1.0 - Power State Control & UI Improvements
+
+### Power State Control
+- **Alle 6 OpenWebif Power-Optionen** als Buttons in der Lovelace Card:
+  - Standby Umschalten (State 0)
+  - Ausschalten (State 1)
+  - Receiver Neustart (State 2)
+  - GUI Neustart (State 3)
+  - Wake Up (State 4)
+  - Standby (State 5)
+- Neue Methode `_send_power_state()` nutzt den OpenWebif-Endpunkt `/api/powerstate?newstate=X`
+- `async_turn_on` nutzt jetzt Wake Up (State 4) statt KEY_POWER
+- `async_turn_off` nutzt jetzt Standby (State 5) statt KEY_POWER
+- `async_send_command` erkennt `POWER_STATE_0` bis `POWER_STATE_5` Commands
+
+### UI Improvements
+- **Lovelace Card vergrößert**: Padding, Font-Größen, Button-Größen und Abstände erhöht
+- Padding: 6px → 12px
+- Header Font: 13px → 16px
+- Button Font: 11px → 13px, Padding: 5px → 8px
+- Navigation Grid: 44px → 54px
+- Container max-width: 250px → 320px
+
+### Version
+- Bumped `manifest.json` version from `1.0.3` to `1.1.0`
+
+---
+
 ## v1.0.3 - Fix: Correct async method for static path registration
 
 ### Bug Fix
