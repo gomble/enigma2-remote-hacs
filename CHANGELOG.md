@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.4.1 - Fix: Visual Editor focus loss & native Entity Picker
+
+### Bug Fix
+- **Editor inputs were immediately deselected** — root cause: editor was calling `innerHTML` on every config change, destroying and recreating all DOM nodes (and their focus state)
+- **Fix**: Editor now renders **once** via `_initialRender()`. Subsequent config updates only set `ha-form.data` (a property setter — no DOM replacement). Focus is fully preserved.
+
+### Improvements
+- **Entity Picker** now uses the native HA entity picker (`ha-form` with `selector: { entity: { domain: 'remote', integration: 'enigma2_remote' } }`), filtered to only show entities from this integration
+- **ha-form** replaces the custom HTML editor — HA handles all rendering, theming and accessibility internally
+- Section headers for "Colors Configuration" and "Dimensions" in editor
+- Buy Me a Coffee button + Code Editor link in editor footer
+
+---
+
 ## v1.4.0 - Visual Card Editor
 
 ### New: Lovelace Visual Editor
