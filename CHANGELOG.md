@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.3.0 - Multilingual support (DE / EN / FR / TR)
+
+### Lovelace Card — i18n
+- Card labels now follow the **Home Assistant language setting** automatically (`hass.language`)
+- Translated labels: Standby Toggle, Power Off, Receiver Restart, GUI Restart, Wake Up, Standby, Menu, Exit, Info, Back, List
+- Supported languages: **Deutsch (de)**, **English (en)**, **Français (fr)**, **Türkçe (tr)**
+- Falls back to English for any other language
+
+### Config Flow — Translations
+- Added **`translations/de.json`** — German UI strings for setup dialog
+- Added **`translations/fr.json`** — French UI strings for setup dialog
+- Added **`translations/tr.json`** — Turkish UI strings for setup dialog
+- `translations/en.json` and `strings.json` kept in sync
+
+---
+
 ## v1.2.1 - Logo, README & cleanup
 
 ### Changes

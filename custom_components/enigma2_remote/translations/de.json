@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 Fernbedienung",
+        "description": "Gib die Verbindungsdaten deines Enigma2-Geräts ein.",
+        "data": {
+          "host": "IP-Adresse oder Hostname",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Enigma2-Gerät fehlgeschlagen. Bitte IP-Adresse und Port prüfen.",
+      "unknown": "Ein unbekannter Fehler ist aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist bereits konfiguriert."
+    }
+  }
+}

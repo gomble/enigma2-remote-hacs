@@ -4,10 +4,74 @@
  * https://github.com/madmicio/LG-WebOS-Remote-Control
  */
 
+// ── Translations ────────────────────────────────────────────────────────────
+const ENIGMA2_TRANSLATIONS = {
+  de: {
+    standby_toggle:   'Standby Umschalten',
+    power_off:        'Ausschalten',
+    receiver_restart: 'Rcvr Neustart',
+    gui_restart:      'GUI Neustart',
+    wake_up:          'Aufwecken',
+    standby:          'Standby',
+    menu:             'MENÜ',
+    exit:             'BEENDEN',
+    info:             'INFO',
+    back:             'ZURÜCK',
+    list:             'LISTE',
+  },
+  en: {
+    standby_toggle:   'Toggle Standby',
+    power_off:        'Power Off',
+    receiver_restart: 'Rcvr Restart',
+    gui_restart:      'GUI Restart',
+    wake_up:          'Wake Up',
+    standby:          'Standby',
+    menu:             'MENU',
+    exit:             'EXIT',
+    info:             'INFO',
+    back:             'BACK',
+    list:             'LIST',
+  },
+  fr: {
+    standby_toggle:   'Basculer Veille',
+    power_off:        'Éteindre',
+    receiver_restart: 'Redém. Rcvr',
+    gui_restart:      'Redém. GUI',
+    wake_up:          'Réveiller',
+    standby:          'Veille',
+    menu:             'MENU',
+    exit:             'QUITTER',
+    info:             'INFO',
+    back:             'RETOUR',
+    list:             'LISTE',
+  },
+  tr: {
+    standby_toggle:   'Bekleme Geçiş',
+    power_off:        'Kapat',
+    receiver_restart: 'Alıcı Yeniden',
+    gui_restart:      'GUI Yeniden',
+    wake_up:          'Uyandır',
+    standby:          'Bekleme',
+    menu:             'MENÜ',
+    exit:             'ÇIKIŞ',
+    info:             'BİLGİ',
+    back:             'GERİ',
+    list:             'LİSTE',
+  },
+};
+
+function _t(lang, key) {
+  const base = lang ? lang.split('-')[0].toLowerCase() : 'en';
+  const dict = ENIGMA2_TRANSLATIONS[base] || ENIGMA2_TRANSLATIONS['en'];
+  return dict[key] || ENIGMA2_TRANSLATIONS['en'][key] || key;
+}
+// ────────────────────────────────────────────────────────────────────────────
+
 class Enigma2RemoteCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this._lang = null;
   }
 
   setConfig(config) {
@@ -18,11 +82,19 @@ class Enigma2RemoteCard extends HTMLElement {
 
   set hass(hass) {
     this._hass = hass;
+    // Re-render when language changes
+    const lang = hass.language || hass.locale?.language || 'en';
+    if (lang !== this._lang) {
+      this._lang = lang;
+      this._render();
+    }
   }
 
   _render() {
     const title = this.config.name || 'Enigma2 Remote';
     const w = this.config.width ? parseInt(this.config.width) : 260;
+    const lang = this._lang || 'en';
+    const t = (key) => _t(lang, key);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -408,13 +480,13 @@ class Enigma2RemoteCard extends HTMLElement {
 
             <!-- ── POWER ── -->
             <div class="power-section">
-              <button class="btn-standby" data-command="POWER_STATE_0">⏻ Standby Umschalten</button>
+              <button class="btn-standby" data-command="POWER_STATE_0">⏻ ${t('standby_toggle')}</button>
               <div class="power-options">
-                <button class="btn-power-opt" data-command="POWER_STATE_1">Ausschalten</button>
-                <button class="btn-power-opt" data-command="POWER_STATE_2">Rcvr Neustart</button>
-                <button class="btn-power-opt" data-command="POWER_STATE_3">GUI Neustart</button>
-                <button class="btn-power-opt" data-command="POWER_STATE_4">Wake Up</button>
-                <button class="btn-power-opt" data-command="POWER_STATE_5">Standby</button>
+                <button class="btn-power-opt" data-command="POWER_STATE_1">${t('power_off')}</button>
+                <button class="btn-power-opt" data-command="POWER_STATE_2">${t('receiver_restart')}</button>
+                <button class="btn-power-opt" data-command="POWER_STATE_3">${t('gui_restart')}</button>
+                <button class="btn-power-opt" data-command="POWER_STATE_4">${t('wake_up')}</button>
+                <button class="btn-power-opt" data-command="POWER_STATE_5">${t('standby')}</button>
               </div>
             </div>
 
@@ -423,16 +495,16 @@ class Enigma2RemoteCard extends HTMLElement {
             <!-- ── VOL / CH / MENU ── -->
             <div class="grid-vc">
               <button class="btn-vc vc-ch-up"   data-key="KEY_CHANNELUP">CH+</button>
-              <button class="btn-vc vc-menu"     data-key="KEY_MENU">MENU</button>
+              <button class="btn-vc vc-menu"     data-key="KEY_MENU">${t('menu')}</button>
               <button class="btn-vc vc-vol-up"   data-key="KEY_VOLUMEUP">VOL+</button>
 
               <button class="btn-vc vc-ch-down"  data-key="KEY_CHANNELDOWN">CH−</button>
               <button class="btn-vc vc-mute"     data-key="KEY_MUTE">🔇</button>
               <button class="btn-vc vc-vol-down" data-key="KEY_VOLUMEDOWN">VOL−</button>
 
-              <button class="btn-vc vc-exit"     data-key="KEY_EXIT">EXIT</button>
-              <button class="btn-vc vc-info"     data-key="KEY_INFO">INFO</button>
-              <button class="btn-vc vc-back"     data-key="KEY_BACK">BACK</button>
+              <button class="btn-vc vc-exit"     data-key="KEY_EXIT">${t('exit')}</button>
+              <button class="btn-vc vc-info"     data-key="KEY_INFO">${t('info')}</button>
+              <button class="btn-vc vc-back"     data-key="KEY_BACK">${t('back')}</button>
             </div>
 
             <div class="divider"></div>
@@ -473,7 +545,7 @@ class Enigma2RemoteCard extends HTMLElement {
             <!-- ── FUNCTIONS ── -->
             <div class="row-func">
               <button class="btn-func" data-key="KEY_EPG">EPG</button>
-              <button class="btn-func" data-key="KEY_LIST">LIST</button>
+              <button class="btn-func" data-key="KEY_LIST">${t('list')}</button>
               <button class="btn-func" data-key="KEY_TV">TV</button>
             </div>
 

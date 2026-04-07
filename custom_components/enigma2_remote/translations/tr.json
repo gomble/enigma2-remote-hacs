@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 Uzaktan Kumanda",
+        "description": "Enigma2 cihazınızın bağlantı bilgilerini girin.",
+        "data": {
+          "host": "IP Adresi veya Ana Bilgisayar Adı",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Enigma2 cihazına bağlanılamadı. Lütfen IP adresi ve portu kontrol edin.",
+      "unknown": "Bilinmeyen bir hata oluştu."
+    },
+    "abort": {
+      "already_configured": "Bu cihaz zaten yapılandırılmış."
+    }
+  }
+}

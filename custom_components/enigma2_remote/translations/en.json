@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Enigma2 Remote Control Setup",
+        "title": "Enigma2 Remote Control",
         "description": "Enter the connection details for your Enigma2 device.",
         "data": {
           "host": "IP Address or Hostname",
