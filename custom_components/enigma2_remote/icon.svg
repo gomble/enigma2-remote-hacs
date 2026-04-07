@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background -->
+  <rect width="200" height="200" rx="36" fill="#1e2023"/>
+
+  <!-- Remote body -->
+  <rect x="62" y="22" width="76" height="156" rx="22" fill="#2d3436"/>
+
+  <!-- Power button (red circle) -->
+  <circle cx="100" cy="54" r="17" fill="#c0392b"/>
+  <text x="100" y="60" text-anchor="middle" fill="#ffffff" font-size="17"
+        font-family="Arial, sans-serif">⏻</text>
+
+  <!-- Nav ring -->
+  <circle cx="100" cy="107" r="25" fill="#636e72"/>
+  <!-- OK center (orange) -->
+  <circle cx="100" cy="107" r="13" fill="#e67e22"/>
+
+  <!-- Arrow symbols -->
+  <text x="100" y="89"  text-anchor="middle" fill="#ecf0f1" font-size="9"  font-family="Arial,sans-serif">▲</text>
+  <text x="100" y="129" text-anchor="middle" fill="#ecf0f1" font-size="9"  font-family="Arial,sans-serif">▼</text>
+  <text x="82"  y="112" text-anchor="middle" fill="#ecf0f1" font-size="9"  font-family="Arial,sans-serif">◀</text>
+  <text x="118" y="112" text-anchor="middle" fill="#ecf0f1" font-size="9"  font-family="Arial,sans-serif">▶</text>
+
+  <!-- OK label -->
+  <text x="100" y="111" text-anchor="middle" fill="#ffffff" font-size="8"
+        font-weight="bold" font-family="Arial,sans-serif">OK</text>
+
+  <!-- Color dots -->
+  <circle cx="79"  cy="153" r="6" fill="#e74c3c"/>
+  <circle cx="93"  cy="153" r="6" fill="#2ecc71"/>
+  <circle cx="107" cy="153" r="6" fill="#f39c12"/>
+  <circle cx="121" cy="153" r="6" fill="#3498db"/>
+</svg>

@@ -4,6 +4,10 @@
 [![GitHub Release](https://img.shields.io/github/release/gomble/enigma2-remote-hacs.svg)](https://github.com/gomble/enigma2-remote-hacs/releases)
 [![License](https://img.shields.io/github/license/gomble/enigma2-remote-hacs.svg)](LICENSE)
 
+<a href="https://www.buymeacoffee.com/gomble" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174">
+</a>
+
 A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g. Dreambox, VU+) via the OpenWebif API.
 
 ## ✨ Features
@@ -15,6 +19,10 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 - 🔘 **Long Key Presses** — Hold-function support (500 ms)
 - 🌐 **OpenWebif API** — Uses the standard API, no additional software required
 - 🔓 **No Authentication** — Works out of the box without login
+
+## 📸 Preview
+
+![Enigma2 Remote Card](screenshots/card-preview.png)
 
 ## 📋 Prerequisites
 
@@ -41,8 +49,9 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 1. Download the latest version from [Releases](https://github.com/gomble/enigma2-remote-hacs/releases)
 2. Extract the archive
 3. Copy the folder `custom_components/enigma2_remote` to `<config>/custom_components/`
-4. Copy the file `www/enigma2-remote-card.js` to `<config>/www/`
-5. Restart Home Assistant
+4. Restart Home Assistant
+
+> The Lovelace card is automatically registered — no manual resource configuration needed.
 
 ## ⚙️ Configuration
 
@@ -225,13 +234,14 @@ enigma2_remote/
 │       ├── config_flow.py           # UI configuration flow
 │       ├── remote.py                # Remote entity platform
 │       ├── const.py                 # Constants
+│       ├── icon.svg                 # Integration icon
 │       ├── strings.json             # UI strings
 │       ├── translations/
 │       │   └── en.json              # English translations
 │       └── www/
 │           └── enigma2-remote-card.js  # Lovelace card (auto-registered)
-├── www/
-│   └── enigma2-remote-card.js       # Lovelace custom card
+├── screenshots/
+│   └── card-preview.png             # Card preview screenshot
 ├── README.md                        # This file
 ├── hacs.json                        # HACS manifest
 ├── LICENSE                          # MIT License
@@ -281,3 +291,11 @@ For questions or issues:
 
 - 🐛 [Create an Issue](https://github.com/gomble/enigma2-remote-hacs/issues)
 - 💬 [Discussions](https://github.com/gomble/enigma2-remote-hacs/discussions)
+
+## ☕ Buy Me a Coffee
+
+If you find this integration useful, consider supporting its development:
+
+<a href="https://www.buymeacoffee.com/gomble" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174">
+</a>

@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.2.1 - Logo, README & cleanup
+
+### Changes
+- Added `icon.svg` integration logo in `custom_components/enigma2_remote/`
+- Added **Buy Me a Coffee** button to README (top + support section)
+- Added **Screenshots** section in README with card preview
+- Removed duplicate `www/enigma2-remote-card.js` from repo root — HA only serves from `custom_components/enigma2_remote/www/`
+- Updated manual installation instructions (no manual JS copy needed)
+- Updated project structure in README
+
+---
+
 ## v1.2.0 - Redesigned Lovelace Card (LG WebOS style)
 
 ### Lovelace Card Redesign
