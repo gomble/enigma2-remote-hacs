@@ -189,17 +189,35 @@ data:
 
 ## 📱 Screenshots
 
-The Lovelace card displays a clean remote control with:
-- Power state controls (Standby Umschalten, Ausschalten, Receiver Neustart, GUI Neustart, Wake Up, Standby)
-- Number keys (0–9)
-- Navigation keys (arrows + OK)
-- Menu and Exit
-- Color keys (Red, Green, Yellow, Blue)
-- Channel keys
-- Additional functions (Info, EPG, List, TV)
-- Media controls (Rewind, Play, Pause, Stop, Fast Forward)
+### Remote Control Card
 
-The design automatically adapts to your Home Assistant theme and is fully responsive.
+![Enigma2 Remote Card](screenshots/card-preview.png)
+
+### Visual Card Editor
+
+The card comes with a **built-in visual editor** — no YAML editing required!
+
+![Enigma2 Visual Editor](screenshots/editor-preview.png)
+
+Open the editor by clicking the **pencil icon** on the card in your Lovelace dashboard.
+
+#### Editor Options
+
+| Setting | Description |
+|---|---|
+| **Enigma2 Remote Entity** | Native HA entity picker — only shows entities from this integration |
+| **Remote Control Name** | Optional display title shown at the top of the card |
+| **Buttons Color** | Background color for all buttons (hex or CSS color) |
+| **Text Color** | Text/icon color for all buttons |
+| **Background Color** | Card background color (leave empty for HA theme default) |
+| **Border Color** | Remote body border color (leave empty for HA theme default) |
+| **Show Color Buttons** | Toggle the RED / GREEN / YELLOW / BLUE color button row on or off |
+| **Card Scale** | Resize the entire remote (0.5× – 1.5×, default 1.0) |
+| **Card Border Width** | Width of the remote body border in px (0–6) |
+
+All changes are applied instantly to the **live preview** on the right side of the editor.
+
+For advanced options (e.g. custom CSS variables), switch to the **Code Editor** at the bottom of the dialog.
 
 ## 🔧 Troubleshooting
 
