@@ -43,8 +43,12 @@ class Enigma2RemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             host     = user_input[CONF_HOST].strip()
-            port     = user_input.get(CONF_PORT, DEFAULT_PORT)
             ssl      = user_input.get(CONF_SSL, DEFAULT_SSL)
+            port     = user_input.get(CONF_PORT, DEFAULT_PORT)
+            # Auto-switch port: 80 → 443 when HTTPS is enabled
+            if ssl and port == DEFAULT_PORT:
+                port = 443
+            user_input = {**user_input, CONF_PORT: port}
             username = user_input.get(CONF_USERNAME, "").strip()
             password = user_input.get(CONF_PASSWORD, "")
 
