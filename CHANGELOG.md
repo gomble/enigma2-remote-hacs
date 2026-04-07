@@ -1,5 +1,35 @@
 # Changelog
 
+## v1.5.0b1 - BETA: HTTPS, Authentication, Hostname support, detailed logging
+
+> **Beta release** — not served as default in HACS. Enable beta releases in HACS settings to install.
+
+### New Features
+- **Hostname support**: The setup dialog now accepts hostnames (e.g. `receiver.fritz.box`) in addition to IP addresses. DNS resolution is verified before attempting a connection, with a specific error message if it fails.
+- **HTTPS / SSL support**: New toggle "Use HTTPS (SSL/TLS)" in setup. Self-signed certificates are accepted automatically.
+- **Authentication**: New optional username and password fields in setup. Credentials are sent as HTTP Basic Auth to every request. Works for both HTTP and HTTPS.
+
+### Improved Error Handling & Logging
+All connection failures are now logged with **specific, actionable messages** at `ERROR` level:
+
+| Situation | Log message |
+|---|---|
+| DNS resolution failure | hostname, reason |
+| Connection refused / unreachable | host, port, suggestion to check OpenWebif |
+| HTTP 401 Unauthorized | hint to check credentials |
+| HTTP 403 Forbidden | hint about OpenWebif permissions |
+| HTTP 404 Not Found | hint to check OpenWebif / port |
+| Timeout (>10 s) | hint to check device power & network |
+| SSL/TLS error | certificate details |
+| Unexpected error | full stack trace via `_LOGGER.exception` |
+
+### Config Flow
+- New fields: `ssl` (bool), `username` (str), `password` (str)
+- New error keys: `cannot_resolve`, `invalid_auth`
+- All 4 languages (DE/EN/FR/TR) updated with new field labels and error messages
+
+---
+
 ## v1.4.1 - Fix: Visual Editor focus loss & native Entity Picker
 
 ### Bug Fix

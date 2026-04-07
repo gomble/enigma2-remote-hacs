@@ -3,16 +3,21 @@
     "step": {
       "user": {
         "title": "Télécommande Enigma2",
-        "description": "Entrez les informations de connexion de votre appareil Enigma2.",
+        "description": "Entrez les informations de connexion de votre appareil Enigma2. Laissez le nom d'utilisateur et le mot de passe vides si OpenWebif fonctionne sans authentification.",
         "data": {
           "host": "Adresse IP ou nom d'hôte",
-          "port": "Port"
+          "port": "Port",
+          "ssl": "Utiliser HTTPS (SSL/TLS)",
+          "username": "Nom d'utilisateur (optionnel)",
+          "password": "Mot de passe (optionnel)"
         }
       }
     },
     "error": {
-      "cannot_connect": "Impossible de se connecter à l'appareil Enigma2. Veuillez vérifier l'adresse IP et le port.",
-      "unknown": "Une erreur inconnue s'est produite."
+      "cannot_connect": "Impossible de se connecter à l'appareil Enigma2. Vérifiez l'hôte, le port et qu'OpenWebif fonctionne. Consultez le journal Home Assistant pour plus de détails.",
+      "cannot_resolve": "Impossible de résoudre le nom d'hôte. Vérifiez le nom d'hôte et la connectivité réseau depuis Home Assistant.",
+      "invalid_auth": "Authentification échouée (HTTP 401). Vérifiez le nom d'utilisateur et le mot de passe.",
+      "unknown": "Une erreur inattendue s'est produite. Consultez le journal Home Assistant pour plus de détails."
     },
     "abort": {
       "already_configured": "Cet appareil est déjà configuré."

@@ -3,16 +3,21 @@
     "step": {
       "user": {
         "title": "Enigma2 Fernbedienung",
-        "description": "Gib die Verbindungsdaten deines Enigma2-Geräts ein.",
+        "description": "Verbindungsdaten des Enigma2-Geräts eingeben. Benutzername und Passwort leer lassen, wenn OpenWebif ohne Authentifizierung läuft.",
         "data": {
           "host": "IP-Adresse oder Hostname",
-          "port": "Port"
+          "port": "Port",
+          "ssl": "HTTPS verwenden (SSL/TLS)",
+          "username": "Benutzername (optional)",
+          "password": "Passwort (optional)"
         }
       }
     },
     "error": {
-      "cannot_connect": "Verbindung zum Enigma2-Gerät fehlgeschlagen. Bitte IP-Adresse und Port prüfen.",
-      "unknown": "Ein unbekannter Fehler ist aufgetreten."
+      "cannot_connect": "Verbindung zum Enigma2-Gerät fehlgeschlagen. Host, Port und OpenWebif-Status prüfen. Details im Home Assistant Log.",
+      "cannot_resolve": "Hostname konnte nicht aufgelöst werden. Hostname und Netzwerkverbindung von Home Assistant aus prüfen.",
+      "invalid_auth": "Authentifizierung fehlgeschlagen (HTTP 401). Benutzername und Passwort prüfen.",
+      "unknown": "Unbekannter Fehler. Details im Home Assistant Log."
     },
     "abort": {
       "already_configured": "Dieses Gerät ist bereits konfiguriert."

@@ -3,16 +3,21 @@
     "step": {
       "user": {
         "title": "Enigma2 Remote Control",
-        "description": "Enter the connection details for your Enigma2 device.",
+        "description": "Enter the connection details for your Enigma2 device. Leave username and password empty if OpenWebif runs without authentication.",
         "data": {
           "host": "IP Address or Hostname",
-          "port": "Port"
+          "port": "Port",
+          "ssl": "Use HTTPS (SSL/TLS)",
+          "username": "Username (optional)",
+          "password": "Password (optional)"
         }
       }
     },
     "error": {
-      "cannot_connect": "Failed to connect to the Enigma2 device. Please check the IP address and port.",
-      "unknown": "An unknown error occurred."
+      "cannot_connect": "Cannot connect to the Enigma2 device. Check the host, port, and that OpenWebif is running. See the Home Assistant log for details.",
+      "cannot_resolve": "Cannot resolve the hostname. Check the hostname and network connectivity from Home Assistant.",
+      "invalid_auth": "Authentication failed (HTTP 401). Check the username and password.",
+      "unknown": "An unexpected error occurred. See the Home Assistant log for details."
     },
     "abort": {
       "already_configured": "This device is already configured."

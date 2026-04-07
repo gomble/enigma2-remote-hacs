@@ -5,8 +5,12 @@ DOMAIN = "enigma2_remote"
 # Configuration
 CONF_HOST = "host"
 CONF_PORT = "port"
+CONF_SSL  = "ssl"
+CONF_USERNAME = "username"
+CONF_PASSWORD = "password"
 
 DEFAULT_PORT = 80
+DEFAULT_SSL  = False
 
 # Enigma2 Remote Control Key Codes (from OpenWebif main.tmpl data-code attributes)
 KEY_CODES = {

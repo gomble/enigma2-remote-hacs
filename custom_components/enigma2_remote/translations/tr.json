@@ -3,16 +3,21 @@
     "step": {
       "user": {
         "title": "Enigma2 Uzaktan Kumanda",
-        "description": "Enigma2 cihazınızın bağlantı bilgilerini girin.",
+        "description": "Enigma2 cihazınızın bağlantı bilgilerini girin. OpenWebif kimlik doğrulama gerektirmiyorsa kullanıcı adı ve şifreyi boş bırakın.",
         "data": {
           "host": "IP Adresi veya Ana Bilgisayar Adı",
-          "port": "Port"
+          "port": "Port",
+          "ssl": "HTTPS kullan (SSL/TLS)",
+          "username": "Kullanıcı Adı (isteğe bağlı)",
+          "password": "Şifre (isteğe bağlı)"
         }
       }
     },
     "error": {
-      "cannot_connect": "Enigma2 cihazına bağlanılamadı. Lütfen IP adresi ve portu kontrol edin.",
-      "unknown": "Bilinmeyen bir hata oluştu."
+      "cannot_connect": "Enigma2 cihazına bağlanılamadı. Host, port ve OpenWebif durumunu kontrol edin. Ayrıntılar için Home Assistant günlüğüne bakın.",
+      "cannot_resolve": "Ana bilgisayar adı çözümlenemedi. Ana bilgisayar adını ve Home Assistant'tan ağ bağlantısını kontrol edin.",
+      "invalid_auth": "Kimlik doğrulama başarısız (HTTP 401). Kullanıcı adı ve şifreyi kontrol edin.",
+      "unknown": "Beklenmeyen bir hata oluştu. Ayrıntılar için Home Assistant günlüğüne bakın."
     },
     "abort": {
       "already_configured": "Bu cihaz zaten yapılandırılmış."
