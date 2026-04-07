@@ -1,5 +1,42 @@
 # Changelog
 
+## v1.4.0 - Visual Card Editor
+
+### New: Lovelace Visual Editor
+The card can now be fully configured through the Home Assistant visual editor (no YAML needed):
+- **Entity** — text field with placeholder
+- **Remote Control Name** — optional display title
+- **Colors Configuration** — color picker + hex text field for:
+  - Buttons Color
+  - Text Color
+  - Background Color
+  - Border Color
+- **Color Buttons** — toggle to show/hide RED/GREEN/YELLOW/BLUE row
+- **Dimensions**:
+  - Card Scale slider (0.5×–1.5×, default 1.0)
+  - Card Border Width slider (0–6 px, default 1)
+- **Buy Me a Coffee** button in the editor
+- Color picker and hex text field stay in sync
+
+### Config structure change
+New nested config format (backward-compatible fallback for old `width` key):
+```yaml
+type: custom:enigma2-remote-card
+entity: remote.enigma2_remote_192_168_1_100
+name: Wohnzimmer
+colors:
+  buttons: "#6d767e"
+  text: "#ffffff"
+  background: ""
+  border: ""
+show_color_buttons: true
+dimensions:
+  scale: 1.0
+  border_width: 1
+```
+
+---
+
 ## v1.3.0 - Multilingual support (DE / EN / FR / TR)
 
 ### Lovelace Card — i18n
