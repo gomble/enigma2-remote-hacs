@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.5.0b2 - BETA: Fix port auto-switch for HTTPS
+
+> **Beta release** — not served as default in HACS.
+
+### Fix
+- When HTTPS is enabled and the port is still on the default (80), the port is automatically switched to 443 before the connection test and saving.
+- A manually entered port (e.g. 8443) is always preserved.
+
+---
+
 ## v1.5.0b1 - BETA: HTTPS, Authentication, Hostname support, detailed logging
 
 > **Beta release** — not served as default in HACS. Enable beta releases in HACS settings to install.
