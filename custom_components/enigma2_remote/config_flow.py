@@ -45,12 +45,28 @@ class Enigma2RemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             host     = user_input[CONF_HOST].strip()
             ssl      = user_input.get(CONF_SSL, DEFAULT_SSL)
             port     = user_input.get(CONF_PORT, DEFAULT_PORT)
-            # Auto-switch port: 80 → 443 when HTTPS is enabled
-            if ssl and port == DEFAULT_PORT:
-                port = 443
-            user_input = {**user_input, CONF_PORT: port}
             username = user_input.get(CONF_USERNAME, "").strip()
             password = user_input.get(CONF_PASSWORD, "")
+
+            # Auto-switch port 80 → 443 when HTTPS is enabled.
+            # Re-show the form immediately so the user sees the updated port
+            # before the connection test runs.
+            if ssl and port == DEFAULT_PORT:
+                port = 443
+                data_schema = vol.Schema(
+                    {
+                        vol.Required(CONF_HOST, default=host): str,
+                        vol.Optional(CONF_PORT, default=port): int,
+                        vol.Optional(CONF_SSL, default=ssl): bool,
+                        vol.Optional(CONF_USERNAME, default=username): str,
+                        vol.Optional(CONF_PASSWORD, default=password): str,
+                    }
+                )
+                return self.async_show_form(
+                    step_id="user",
+                    data_schema=data_schema,
+                    errors={},
+                )
 
             # 1. Resolve hostname
             resolved = await _resolve_host(host)
