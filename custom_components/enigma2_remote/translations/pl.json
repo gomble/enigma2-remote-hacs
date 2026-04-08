@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 Pilot",
+        "description": "Wprowadź dane połączenia z urządzeniem Enigma2. Pozostaw nazwę użytkownika i hasło puste, jeśli OpenWebif działa bez uwierzytelniania.",
+        "data": {
+          "host": "Adres IP lub nazwa hosta",
+          "port": "Port",
+          "ssl": "Użyj HTTPS (SSL/TLS)",
+          "username": "Nazwa użytkownika (opcjonalnie)",
+          "password": "Hasło (opcjonalnie)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można połączyć się z urządzeniem Enigma2. Sprawdź host, port i czy OpenWebif jest uruchomiony. Szczegóły w dzienniku Home Assistant.",
+      "cannot_resolve": "Nie można rozwiązać nazwy hosta. Sprawdź nazwę hosta i łączność sieciową z Home Assistant.",
+      "invalid_auth": "Uwierzytelnianie nie powiodło się (HTTP 401). Sprawdź nazwę użytkownika i hasło.",
+      "unknown": "Wystąpił nieoczekiwany błąd. Szczegóły w dzienniku Home Assistant."
+    },
+    "abort": {
+      "already_configured": "To urządzenie jest już skonfigurowane."
+    }
+  }
+}

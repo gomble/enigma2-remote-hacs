@@ -36,6 +36,18 @@ const ENIGMA2_TRANSLATIONS = {
     wake_up: 'Sveglia', standby: 'Standby',
     menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
   },
+  nl: {
+    standby_toggle: 'Standby Wisselen', power_off: 'Uitschakelen',
+    receiver_restart: 'Ontvanger Herstart', gui_restart: 'GUI Herstart',
+    wake_up: 'Wekken', standby: 'Standby',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
+  pl: {
+    standby_toggle: 'Przełącz Czuwanie', power_off: 'Wyłącz',
+    receiver_restart: 'Restart Odbiornika', gui_restart: 'Restart GUI',
+    wake_up: 'Wybudź', standby: 'Czuwanie',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
   pt: {
     standby_toggle: 'Alternar Standby', power_off: 'Desligar',
     receiver_restart: 'Reiniciar Rcvr', gui_restart: 'Reiniciar GUI',

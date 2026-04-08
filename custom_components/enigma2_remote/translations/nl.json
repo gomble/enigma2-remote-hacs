@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 Afstandsbediening",
+        "description": "Voer de verbindingsgegevens van je Enigma2-apparaat in. Laat gebruikersnaam en wachtwoord leeg als OpenWebif zonder authenticatie werkt.",
+        "data": {
+          "host": "IP-adres of hostnaam",
+          "port": "Poort",
+          "ssl": "HTTPS gebruiken (SSL/TLS)",
+          "username": "Gebruikersnaam (optioneel)",
+          "password": "Wachtwoord (optioneel)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken met het Enigma2-apparaat. Controleer het host, de poort en of OpenWebif actief is. Zie het Home Assistant-logboek voor details.",
+      "cannot_resolve": "Kan de hostnaam niet oplossen. Controleer de hostnaam en de netwerkverbinding vanuit Home Assistant.",
+      "invalid_auth": "Authenticatie mislukt (HTTP 401). Controleer de gebruikersnaam en het wachtwoord.",
+      "unknown": "Er is een onverwachte fout opgetreden. Zie het Home Assistant-logboek voor details."
+    },
+    "abort": {
+      "already_configured": "Dit apparaat is al geconfigureerd."
+    }
+  }
+}
