@@ -5,8 +5,9 @@ import os
 from pathlib import Path
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.const import EVENT_HOMEASSISTANT_STARTED, Platform
+from homeassistant.helpers.storage import Store
 
 from .const import DOMAIN
 
@@ -14,13 +15,16 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = [Platform.REMOTE]
 
-# Read version from manifest so the URL changes on every release → cache-busting
-_MANIFEST = json.loads((Path(__file__).parent / "manifest.json").read_text())
+_MANIFEST  = json.loads((Path(__file__).parent / "manifest.json").read_text())
 _VERSION   = _MANIFEST.get("version", "0")
 
 CARD_SERVE_URL = "/enigma2_remote/enigma2-remote-card.js"
 CARD_URL       = f"{CARD_SERVE_URL}?v={_VERSION}"
 CARD_PATH      = os.path.join(os.path.dirname(__file__), "www", "enigma2-remote-card.js")
+
+# HA stores Lovelace resources here
+_LOVELACE_RESOURCES_STORE = "lovelace_resources"
+_LOVELACE_RESOURCES_VERSION = 1
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -29,29 +33,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
     if "_card_registered" not in hass.data[DOMAIN]:
-        # 1. Serve the JS file as a static path
+        # Serve the JS file as a static path
         if os.path.isfile(CARD_PATH):
             from homeassistant.components.http import StaticPathConfig
             await hass.http.async_register_static_paths(
                 [StaticPathConfig(CARD_SERVE_URL, CARD_PATH, cache_headers=False)]
             )
-            _LOGGER.info(
-                "Enigma2 Remote Card served at %s (version %s)", CARD_URL, _VERSION
-            )
+            _LOGGER.info("Enigma2 Remote Card served at %s", CARD_URL)
 
-        # 2. Remove any stale entries for our card URL from lovelace_resources storage.
-        #    These were written by older versions of this integration using
-        #    async_create_item(). We delete them so the browser doesn't pick up the
-        #    unversioned URL and ignore the cache-busted one.
-        await _async_cleanup_stale_lovelace_resource(hass)
+        # Remove the stale unversioned storage entry directly from the Store.
+        # This works regardless of whether Lovelace is already loaded in memory.
+        await _async_remove_stale_storage_entry(hass)
 
-        # 3. Register via add_extra_js_url — in-memory only, never writes to
-        #    .storage/lovelace_resources, so it cannot affect other integrations.
+        # Register the card in-memory only — never writes to lovelace_resources.
         from homeassistant.components.frontend import add_extra_js_url
         add_extra_js_url(hass, CARD_URL)
-        _LOGGER.info(
-            "Enigma2 Remote Card registered as extra JS module: %s", CARD_URL
-        )
+        _LOGGER.info("Enigma2 Remote Card registered: %s", CARD_URL)
 
         hass.data[DOMAIN]["_card_registered"] = True
 
@@ -59,54 +56,42 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True
 
 
-async def _async_cleanup_stale_lovelace_resource(hass: HomeAssistant) -> None:
+async def _async_remove_stale_storage_entry(hass: HomeAssistant) -> None:
     """
-    Remove any lovelace_resources entry whose URL starts with CARD_SERVE_URL.
+    Remove any lovelace_resources storage entry for our card.
 
-    This cleans up entries written by older versions of this integration
-    (which used ResourceStorageCollection.async_create_item). Those entries
-    lack the ?v= suffix and prevent proper cache-busting.
+    Older versions of this integration called ResourceStorageCollection.async_create_item(),
+    which wrote the unversioned URL into .storage/lovelace_resources. We read and rewrite
+    that file directly via Store so the stale entry is gone on next browser load.
     """
     try:
-        from homeassistant.components.lovelace.resources import ResourceStorageCollection
+        store = Store(hass, _LOVELACE_RESOURCES_VERSION, _LOVELACE_RESOURCES_STORE)
+        data = await store.async_load()
 
-        if "lovelace" not in hass.data:
+        if not data or "items" not in data:
             return
 
-        lovelace_data = hass.data["lovelace"]
-        resources = None
-
-        if hasattr(lovelace_data, "resources"):
-            resources = lovelace_data.resources
-        elif isinstance(lovelace_data, dict):
-            resources = lovelace_data.get("resources")
-
-        if resources is None or not isinstance(resources, ResourceStorageCollection):
-            return
-
-        # Find all items whose URL is our card (with or without ?v=...)
-        to_delete = [
-            item["id"]
-            for item in resources.async_items()
-            if item.get("url", "").startswith(CARD_SERVE_URL)
+        original = list(data["items"])
+        cleaned  = [
+            item for item in original
+            if not item.get("url", "").startswith(CARD_SERVE_URL)
         ]
 
-        for item_id in to_delete:
-            try:
-                await resources.async_delete_item(item_id)
-                _LOGGER.info(
-                    "Removed stale Lovelace resource entry (id=%s) — "
-                    "card is now served via add_extra_js_url with version suffix",
-                    item_id,
-                )
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning(
-                    "Could not remove stale Lovelace resource id=%s: %s",
-                    item_id, err,
-                )
+        if len(cleaned) == len(original):
+            _LOGGER.debug("No stale Enigma2 resource entry found in lovelace_resources.")
+            return
+
+        data["items"] = cleaned
+        await store.async_save(data)
+        _LOGGER.info(
+            "Removed %d stale Enigma2 resource entry(s) from lovelace_resources storage. "
+            "Card is now served as versioned extra JS module: %s",
+            len(original) - len(cleaned),
+            CARD_URL,
+        )
 
     except Exception as err:  # noqa: BLE001
-        _LOGGER.debug("Stale resource cleanup skipped: %s", err)
+        _LOGGER.warning("Could not clean up stale lovelace_resources entry: %s", err)
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
