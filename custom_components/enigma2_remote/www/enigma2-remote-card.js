@@ -80,7 +80,6 @@ class Enigma2RemoteCard extends HTMLElement {
     const bgColor   = this._cfg('colors.background', '');
     const bdrColor  = this._cfg('colors.border',     'var(--primary-text-color, #888)');
     const showColor = this._cfg('show_color_buttons', true);
-    const bgStyle   = bgColor ? `background:${bgColor} !important;` : '';
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -91,13 +90,19 @@ class Enigma2RemoteCard extends HTMLElement {
           --border-color: ${bdrColor};
           --border-width: ${bdrW}px;
         }
+        /* Strip ha-card of its own background/shadow so only the .page border is visible */
         ha-card {
-          ${bgStyle}
-          border-radius: var(--ha-card-border-radius, 12px);
-          box-shadow: var(--ha-card-box-shadow, none);
-          overflow: hidden;
+          background: ${bgColor || 'transparent'} !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          border: none !important;
         }
-        .card { display: flex; justify-content: center; padding: 12px 8px; }
+        .card {
+          display: flex;
+          justify-content: center;
+          padding: 12px 8px;
+          background: transparent;
+        }
         .page {
           width: var(--remotewidth);
           border: var(--border-width) solid var(--border-color);
