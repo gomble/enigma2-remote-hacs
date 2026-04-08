@@ -409,15 +409,28 @@ class Enigma2RemoteCardEditor extends HTMLElement {
     if (form) form.hass = hass;
   }
 
+  // hex string → [r, g, b] array (null if invalid/empty)
+  _hexToRgb(hex) {
+    if (!hex || typeof hex !== 'string') return null;
+    const m = hex.trim().match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+    return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : null;
+  }
+
+  // [r, g, b] array → hex string (null if invalid)
+  _rgbToHex(rgb) {
+    if (!Array.isArray(rgb) || rgb.length < 3) return null;
+    return '#' + rgb.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+  }
+
   // Flatten nested config into the flat object ha-form expects
   _toFormData(cfg) {
     return {
       entity:             cfg.entity || '',
       name:               cfg.name   || '',
-      color_buttons:      cfg.colors?.buttons    || '#6d767e',
-      color_text:         cfg.colors?.text       || '#ffffff',
-      color_background:   cfg.colors?.background || '',
-      color_border:       cfg.colors?.border     || '',
+      color_buttons:      this._hexToRgb(cfg.colors?.buttons)    ?? [109, 118, 126],
+      color_text:         this._hexToRgb(cfg.colors?.text)       ?? [255, 255, 255],
+      color_background:   this._hexToRgb(cfg.colors?.background) ?? null,
+      color_border:       this._hexToRgb(cfg.colors?.border)     ?? null,
       show_color_buttons: cfg.show_color_buttons !== false,
       haptic_feedback:    cfg.haptic_feedback === true,
       scale:              parseFloat(cfg.dimensions?.scale        ?? 1.0),
@@ -432,10 +445,10 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       entity: data.entity,
       name:   data.name,
       colors: {
-        buttons:    data.color_buttons,
-        text:       data.color_text,
-        background: data.color_background,
-        border:     data.color_border,
+        buttons:    this._rgbToHex(data.color_buttons)    ?? '#6d767e',
+        text:       this._rgbToHex(data.color_text)       ?? '#ffffff',
+        background: this._rgbToHex(data.color_background) ?? '',
+        border:     this._rgbToHex(data.color_border)     ?? '',
       },
       show_color_buttons: data.show_color_buttons,
       haptic_feedback:    data.haptic_feedback,
@@ -468,22 +481,22 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       {
         name:     'color_buttons',
         label:    'Buttons Color',
-        selector: { text: { suffix: 'hex / CSS color' } },
+        selector: { color_rgb: {} },
       },
       {
         name:     'color_text',
         label:    'Text Color',
-        selector: { text: { suffix: 'hex / CSS color' } },
+        selector: { color_rgb: {} },
       },
       {
         name:     'color_background',
-        label:    'Background Color',
-        selector: { text: { suffix: 'leave empty for HA default' } },
+        label:    'Background Color (leave empty for HA default)',
+        selector: { color_rgb: {} },
       },
       {
         name:     'color_border',
-        label:    'Border Color',
-        selector: { text: { suffix: 'leave empty for HA default' } },
+        label:    'Border Color (leave empty for HA default)',
+        selector: { color_rgb: {} },
       },
       {
         name:     'show_color_buttons',
