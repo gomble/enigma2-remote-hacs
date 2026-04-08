@@ -205,10 +205,10 @@ class Enigma2RemoteCard extends HTMLElement {
           user-select: none; transition: filter .1s, transform .1s;
         }
         .btn-color:active { filter: brightness(.7); transform: scale(.91); }
-        .c-red    { background: #e74c3c; }
-        .c-green  { background: #2ecc71; }
+        .c-red    { background: #e74c3c; color: #fff; }
+        .c-green  { background: #2ecc71; color: #fff; }
         .c-yellow { background: #f39c12; color: #fff; }
-        .c-blue   { background: #3498db; }
+        .c-blue   { background: #3498db; color: #fff; }
         /* Numpad */
         .grid-num { display: grid; grid-template-columns: repeat(3,1fr); gap: calc(var(--remotewidth)/58); width: 100%; }
         .btn-num {
