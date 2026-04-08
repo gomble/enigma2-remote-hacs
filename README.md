@@ -18,7 +18,8 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 - ⚙️ **Config Flow** — Easy setup through the Home Assistant UI
 - 🔘 **Long Key Presses** — Hold-function support (500 ms)
 - 🌐 **OpenWebif API** — Uses the standard API, no additional software required
-- 🔓 **No Authentication** — Works out of the box without login
+- 🔒 **HTTPS & Authentication** — Supports SSL/TLS and HTTP Basic Auth for secured OpenWebif setups
+- 🌍 **Hostname Support** — Use hostnames (e.g. `receiver.fritz.box`) instead of IP addresses
 
 ## 📸 Preview
 
@@ -60,11 +61,20 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 1. Go to **Settings** → **Devices & Services**
 2. Click **+ Add Integration**
 3. Search for "Enigma2 Remote Control"
-4. Enter the IP address of your Enigma2 box
-5. Enter the port (default: 80)
-6. Click **Submit**
+4. Fill in the connection details (see table below)
+5. Click **Submit**
 
 The integration automatically creates a Remote entity named `remote.enigma2_remote_<ip_address>`.
+
+#### Setup Fields
+
+| Field | Description | Default |
+|---|---|---|
+| **IP Address or Hostname** | IP address (`192.168.1.100`) or hostname (`receiver.fritz.box`) | — |
+| **Port** | OpenWebif port. Auto-switches to `443` when HTTPS is enabled | `80` |
+| **Use HTTPS (SSL/TLS)** | Enable for secured OpenWebif setups. Self-signed certificates are accepted automatically. Enabling this auto-sets the port to `443`. | Off |
+| **Username** | OpenWebif username — leave empty if no authentication is set up | — |
+| **Password** | OpenWebif password — leave empty if no authentication is set up | — |
 
 ### Adding the Lovelace Card
 

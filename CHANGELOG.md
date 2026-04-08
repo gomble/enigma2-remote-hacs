@@ -1,6 +1,27 @@
 # Changelog
 
-## v1.5.0b2 - BETA: Fix port auto-switch for HTTPS
+## v1.5.0 - HTTPS, Authentication, Hostname support & UI fixes
+
+### New Features
+- **Hostname support** — setup accepts hostnames (e.g. `receiver.fritz.box`) in addition to IP addresses, with DNS resolution check and specific error message on failure
+- **HTTPS / SSL support** — new "Use HTTPS" toggle in setup; self-signed certificates accepted automatically
+- **Authentication** — optional username and password fields; sent as HTTP Basic Auth to every request
+- **Port auto-switch** — enabling HTTPS re-shows the form with port pre-filled as `443` (only when port is still on default 80)
+
+### Improved Error Logging
+- Specific log messages for every failure type: DNS, connection refused, HTTP 401/403/404, timeout, SSL error, unexpected
+- All messages include actionable hints
+
+### Lovelace Card
+- Yellow color button dot is now white (was incorrectly dark)
+- Remote body background is now transparent (inherits card background)
+
+### Translations
+- All 4 languages (DE/EN/FR/TR) updated with new setup field labels and error messages
+
+---
+
+## v1.5.0b3 - BETA: Port field updates to 443 visually when HTTPS is enabled
 
 > **Beta release** — not served as default in HACS.
 

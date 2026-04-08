@@ -105,6 +105,7 @@ class Enigma2RemoteCard extends HTMLElement {
           padding: calc(var(--remotewidth) / 14) calc(var(--remotewidth) / 13);
           display: flex; flex-direction: column; align-items: center;
           gap: calc(var(--remotewidth) / 26); box-sizing: border-box;
+          background: transparent;
         }
         .remote-title {
           font-size: calc(var(--remotewidth) / 15); font-weight: 500;
@@ -201,7 +202,7 @@ class Enigma2RemoteCard extends HTMLElement {
         .btn-color:active { filter: brightness(.7); transform: scale(.91); }
         .c-red    { background: #e74c3c; }
         .c-green  { background: #2ecc71; }
-        .c-yellow { background: #f39c12; color: #222; }
+        .c-yellow { background: #f39c12; color: #fff; }
         .c-blue   { background: #3498db; }
         /* Numpad */
         .grid-num { display: grid; grid-template-columns: repeat(3,1fr); gap: calc(var(--remotewidth)/58); width: 100%; }
