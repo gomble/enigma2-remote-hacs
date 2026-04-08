@@ -20,6 +20,7 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 - 🌐 **OpenWebif API** — Uses the standard API, no additional software required
 - 🔒 **HTTPS & Authentication** — Supports SSL/TLS and HTTP Basic Auth for secured OpenWebif setups
 - 🌍 **Hostname Support** — Use hostnames (e.g. `receiver.fritz.box`) instead of IP addresses
+- 📳 **Haptic Feedback (iOS)** — Enable native haptic feedback for a better feel when pressing buttons and navigating on your receiver — toggleable in the visual editor
 
 ## 📸 Preview
 
