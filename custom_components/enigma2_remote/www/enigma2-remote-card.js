@@ -110,7 +110,7 @@ class Enigma2RemoteCard extends HTMLElement {
           padding: calc(var(--remotewidth) / 14) calc(var(--remotewidth) / 13);
           display: flex; flex-direction: column; align-items: center;
           gap: calc(var(--remotewidth) / 26); box-sizing: border-box;
-          background: transparent;
+          background: ${bgColor || 'var(--ha-card-background, var(--card-background-color, #1c1c1c))'};
         }
         .remote-title {
           font-size: calc(var(--remotewidth) / 15); font-weight: 500;
@@ -325,21 +325,29 @@ class Enigma2RemoteCard extends HTMLElement {
   }
 
   _setupListeners() {
+    const haptic = this._cfg('haptic_feedback', false);
+    const fireHaptic = () => {
+      if (!haptic) return;
+      this.dispatchEvent(new CustomEvent('haptic', {
+        detail: 'light', bubbles: true, composed: true,
+      }));
+    };
     this.shadowRoot.querySelectorAll('[data-key],[data-command]').forEach(btn => {
       let pressTimer, touchHandled = false;
       const key = () => btn.getAttribute('data-key') || btn.getAttribute('data-command');
       btn.addEventListener('touchstart', e => {
         e.preventDefault(); touchHandled = true;
+        fireHaptic();
         this._send(key(), false);
-        pressTimer = setTimeout(() => this._send(key(), true), 500);
+        pressTimer = setTimeout(() => { fireHaptic(); this._send(key(), true); }, 500);
       }, { passive: false });
       btn.addEventListener('touchend', e => {
         e.preventDefault(); clearTimeout(pressTimer);
         setTimeout(() => { touchHandled = false; }, 300);
       }, { passive: false });
       btn.addEventListener('touchcancel', () => { clearTimeout(pressTimer); touchHandled = false; });
-      btn.addEventListener('click', e => { e.preventDefault(); if (!touchHandled) this._send(key(), false); });
-      btn.addEventListener('mousedown', () => { if (!touchHandled) pressTimer = setTimeout(() => this._send(key(), true), 500); });
+      btn.addEventListener('click', e => { e.preventDefault(); if (!touchHandled) { fireHaptic(); this._send(key(), false); } });
+      btn.addEventListener('mousedown', () => { if (!touchHandled) pressTimer = setTimeout(() => { fireHaptic(); this._send(key(), true); }, 500); });
       btn.addEventListener('mouseup',    () => clearTimeout(pressTimer));
       btn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
     });
@@ -364,6 +372,7 @@ class Enigma2RemoteCard extends HTMLElement {
       name: 'Enigma2 Remote',
       colors: { buttons: '#6d767e', text: '#ffffff', background: '', border: '' },
       show_color_buttons: true,
+      haptic_feedback: false,
       dimensions: { scale: 1.0, border_width: 1 },
     };
   }
@@ -410,6 +419,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       color_background:   cfg.colors?.background || '',
       color_border:       cfg.colors?.border     || '',
       show_color_buttons: cfg.show_color_buttons !== false,
+      haptic_feedback:    cfg.haptic_feedback === true,
       scale:              parseFloat(cfg.dimensions?.scale        ?? 1.0),
       border_width:       parseInt  (cfg.dimensions?.border_width ?? 1),
     };
@@ -428,6 +438,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
         border:     data.color_border,
       },
       show_color_buttons: data.show_color_buttons,
+      haptic_feedback:    data.haptic_feedback,
       dimensions: {
         scale:        data.scale,
         border_width: data.border_width,
@@ -477,6 +488,11 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       {
         name:     'show_color_buttons',
         label:    'Show Color Buttons (RED / GREEN / YELLOW / BLUE)',
+        selector: { boolean: {} },
+      },
+      {
+        name:     'haptic_feedback',
+        label:    'Haptic Feedback (iOS)',
         selector: { boolean: {} },
       },
       // Dimensions section header
