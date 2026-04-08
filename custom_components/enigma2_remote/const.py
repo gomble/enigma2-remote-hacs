@@ -8,7 +8,7 @@ ENIGMA2_CARDS = [
     {
         "name":     "Enigma2 Remote Card",
         "filename": "enigma2-remote-card.js",
-        "version":  "1.6.0",
+        "version":  "1.7.0",
     }
 ]
 
