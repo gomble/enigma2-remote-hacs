@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.5.1 - Fix: HACS resources wiped on update & browser cache not cleared
+
+### Bug Fixes
+
+**HACS `/hacsfile/...` resources were deleted after updating the integration**
+- Root cause: `__init__.py` was calling `ResourceStorageCollection.async_create_item()` to register the Lovelace card. This writes the **entire** resource list to `.storage/lovelace_resources`. If our integration loaded before HACS had re-registered its own `/hacsfile/...` entries (race condition on restart), the saved list only contained our entry — wiping everything else.
+- Fix: Replaced `ResourceStorageCollection` with `frontend.add_extra_js_url()`. This registers the card **in memory only** — it never writes to `.storage/lovelace_resources` and therefore cannot affect any other integration's resources.
+
+**Browser cached the old card JS after updates (no version in URL)**
+- Root cause: The resource URL `/enigma2_remote/enigma2-remote-card.js` had no version suffix, so browsers served the cached old file after an update.
+- Fix: Version is now read from `manifest.json` at startup and appended to the URL: `/enigma2_remote/enigma2-remote-card.js?v=1.5.1`. The URL changes on every release, forcing the browser to fetch the new file.
+
+---
+
 ## v1.5.0 - HTTPS, Authentication, Hostname support & UI fixes
 
 ### New Features

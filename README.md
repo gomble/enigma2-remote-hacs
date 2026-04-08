@@ -95,14 +95,7 @@ name: Living Room TV
 
 #### Manually (YAML)
 
-If the card is not auto-detected, add the resource in your Lovelace configuration:
-
-**Settings** → **Dashboards** → **⋮** → **Resources**
-
-- URL: `/enigma2_remote/enigma2-remote-card.js`
-- Resource type: JavaScript Module
-
-Then add the card to your dashboard:
+Add the card to your dashboard:
 
 ```yaml
 type: custom:enigma2-remote-card
