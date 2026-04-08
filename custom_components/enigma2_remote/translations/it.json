@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 Telecomando",
+        "description": "Inserisci i dati di connessione del tuo dispositivo Enigma2. Lascia vuoti utente e password se OpenWebif non richiede autenticazione.",
+        "data": {
+          "host": "Indirizzo IP o nome host",
+          "port": "Porta",
+          "ssl": "Usa HTTPS (SSL/TLS)",
+          "username": "Utente (opzionale)",
+          "password": "Password (opzionale)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile connettersi al dispositivo Enigma2. Verifica host, porta e che OpenWebif sia in esecuzione. Consulta il log di Home Assistant per i dettagli.",
+      "cannot_resolve": "Impossibile risolvere il nome host. Verifica il nome host e la connettività di rete da Home Assistant.",
+      "invalid_auth": "Autenticazione fallita (HTTP 401). Verifica utente e password.",
+      "unknown": "Si è verificato un errore imprevisto. Consulta il log di Home Assistant per i dettagli."
+    },
+    "abort": {
+      "already_configured": "Questo dispositivo è già configurato."
+    }
+  }
+}

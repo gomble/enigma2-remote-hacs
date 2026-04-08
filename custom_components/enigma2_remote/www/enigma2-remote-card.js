@@ -18,16 +18,52 @@ const ENIGMA2_TRANSLATIONS = {
     wake_up: 'Wake Up', standby: 'Standby',
     menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
   },
+  es: {
+    standby_toggle: 'Alternar Standby', power_off: 'Apagar',
+    receiver_restart: 'Reiniciar Rcvr', gui_restart: 'Reiniciar GUI',
+    wake_up: 'Despertar', standby: 'Standby',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
   fr: {
     standby_toggle: 'Basculer Veille', power_off: 'Éteindre',
     receiver_restart: 'Redém. Rcvr', gui_restart: 'Redém. GUI',
     wake_up: 'Réveiller', standby: 'Veille',
     menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
   },
+  it: {
+    standby_toggle: 'Attiva/Disattiva Standby', power_off: 'Spegni',
+    receiver_restart: 'Riavvia Rcvr', gui_restart: 'Riavvia GUI',
+    wake_up: 'Sveglia', standby: 'Standby',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
+  pt: {
+    standby_toggle: 'Alternar Standby', power_off: 'Desligar',
+    receiver_restart: 'Reiniciar Rcvr', gui_restart: 'Reiniciar GUI',
+    wake_up: 'Despertar', standby: 'Standby',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
+  ru: {
+    standby_toggle: 'Переключить режим ожидания', power_off: 'Выключить',
+    receiver_restart: 'Перезапуск ресивера', gui_restart: 'Перезапуск GUI',
+    wake_up: 'Пробудить', standby: 'Режим ожидания',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
   tr: {
     standby_toggle: 'Bekleme Geçiş', power_off: 'Kapat',
     receiver_restart: 'Alıcı Yeniden', gui_restart: 'GUI Yeniden',
     wake_up: 'Uyandır', standby: 'Bekleme',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
+  zh: {
+    standby_toggle: '切换待机', power_off: '关机',
+    receiver_restart: '重启接收器', gui_restart: '重启界面',
+    wake_up: '唤醒', standby: '待机',
+    menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
+  },
+  ar: {
+    standby_toggle: 'تبديل الاستعداد', power_off: 'إيقاف التشغيل',
+    receiver_restart: 'إعادة تشغيل جهاز الاستقبال', gui_restart: 'إعادة تشغيل الواجهة',
+    wake_up: 'إيقاظ', standby: 'استعداد',
     menu: 'MENU', exit: 'EXIT', info: 'INFO', back: 'BACK', list: 'LIST',
   },
 };

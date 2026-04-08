@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enigma2 遥控器",
+        "description": "输入您的 Enigma2 设备连接信息。如果 OpenWebif 无需认证，请将用户名和密码留空。",
+        "data": {
+          "host": "IP 地址或主机名",
+          "port": "端口",
+          "ssl": "使用 HTTPS（SSL/TLS）",
+          "username": "用户名（可选）",
+          "password": "密码（可选）"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接到 Enigma2 设备。请检查主机、端口以及 OpenWebif 是否正在运行。详情请查看 Home Assistant 日志。",
+      "cannot_resolve": "无法解析主机名。请检查主机名以及从 Home Assistant 的网络连接。",
+      "invalid_auth": "认证失败（HTTP 401）。请检查用户名和密码。",
+      "unknown": "发生意外错误。详情请查看 Home Assistant 日志。"
+    },
+    "abort": {
+      "already_configured": "此设备已配置。"
+    }
+  }
+}
