@@ -245,37 +245,11 @@ For advanced options (e.g. custom CSS variables), switch to the **Code Editor** 
 
 ## 🛠️ Development
 
-### Project Structure
-
-```
-enigma2_remote/
-├── custom_components/
-│   └── enigma2_remote/
-│       ├── __init__.py              # Integration setup
-│       ├── manifest.json            # Integration manifest
-│       ├── config_flow.py           # UI configuration flow
-│       ├── remote.py                # Remote entity platform
-│       ├── const.py                 # Constants
-│       ├── icon.svg                 # Integration icon
-│       ├── strings.json             # UI strings
-│       ├── translations/
-│       │   └── en.json              # English translations
-│       └── www/
-│           └── enigma2-remote-card.js  # Lovelace card (auto-registered)
-├── screenshots/
-│   └── card-preview.png             # Card preview screenshot
-├── README.md                        # This file
-├── hacs.json                        # HACS manifest
-├── LICENSE                          # MIT License
-└── info.md                          # HACS store description
-```
-
 ### Local Testing
 
 1. Clone the repository
 2. Copy `custom_components/enigma2_remote` to `<ha_config>/custom_components/`
-3. Copy `www/enigma2-remote-card.js` to `<ha_config>/www/`
-4. Restart Home Assistant
+3. Restart Home Assistant
 
 ## 📝 API Reference
 
