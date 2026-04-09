@@ -361,15 +361,17 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_TV">TV</button>
           </div>
           <div class="row-media">
-            <button class="btn-media" data-key="KEY_SKIPBACK">⏮</button>
             <button class="btn-media" data-key="KEY_REWIND">⏪</button>
             <button class="btn-media" data-key="KEY_PLAY">▶</button>
             <button class="btn-media" data-key="KEY_PAUSE">⏸</button>
             <button class="btn-media" data-key="KEY_STOP">⏹</button>
             <button class="btn-media" data-key="KEY_FASTFORWARD">⏩</button>
-            <button class="btn-media" data-key="KEY_SKIPFORWARD">⏭</button>
           </div>
           ${showExtra ? `
+          <div class="row-media">
+            <button class="btn-media" data-key="KEY_SKIPBACK">⏮</button>
+            <button class="btn-media" data-key="KEY_SKIPFORWARD">⏭</button>
+          </div>
           <div class="divider"></div>
           <div class="row-func">
             <button class="btn-func" data-key="KEY_TEXT">TXT</button>
