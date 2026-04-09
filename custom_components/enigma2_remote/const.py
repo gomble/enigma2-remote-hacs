@@ -8,7 +8,7 @@ ENIGMA2_CARDS = [
     {
         "name":     "Enigma2 Remote Card",
         "filename": "enigma2-remote-card.js",
-        "version":  "1.7.1b1",
+        "version":  "1.7.2b1",
     }
 ]
 
@@ -22,7 +22,7 @@ CONF_PASSWORD = "password"
 DEFAULT_PORT = 80
 DEFAULT_SSL  = False
 
-# Enigma2 Remote Control Key Codes (from OpenWebif main.tmpl data-code attributes)
+# Enigma2 Remote Control Key Codes (from OpenWebif full remote data-code attributes)
 KEY_CODES = {
     # Number keys
     "KEY_0": 11,
@@ -36,54 +36,74 @@ KEY_CODES = {
     "KEY_8": 9,
     "KEY_9": 10,
 
-    # Power (OpenWebif special code)
+    # Power & Mute
     "KEY_POWER": 1001,
-    # KEY_MUTE is handled via web/vol?set=mute in remote.py, not remotecontrol API
+    "KEY_MUTE":  113,
 
     # Volume keys
-    "KEY_VOLUMEUP": 115,
+    "KEY_VOLUMEUP":   115,
     "KEY_VOLUMEDOWN": 114,
 
     # Navigation keys
-    "KEY_UP": 103,
-    "KEY_DOWN": 108,
-    "KEY_LEFT": 105,
+    "KEY_UP":    103,
+    "KEY_DOWN":  108,
+    "KEY_LEFT":  105,
     "KEY_RIGHT": 106,
-    "KEY_OK": 352,
-    "KEY_MENU": 139,
-    "KEY_EXIT": 174,
-    "KEY_BACK": 158,
-    "KEY_HOME": 102,
+    "KEY_OK":    352,
+    "KEY_MENU":  139,
+    "KEY_EXIT":  174,
+    "KEY_BACK":  158,
+    "KEY_HOME":  102,
 
     # Color keys
-    "KEY_RED": 398,
-    "KEY_GREEN": 399,
+    "KEY_RED":    398,
+    "KEY_GREEN":  399,
     "KEY_YELLOW": 400,
-    "KEY_BLUE": 401,
+    "KEY_BLUE":   401,
 
     # Channel keys
-    "KEY_CHANNELUP": 402,
+    "KEY_CHANNELUP":   402,
     "KEY_CHANNELDOWN": 403,
 
     # Media playback keys
-    "KEY_PLAY": 207,
-    "KEY_PAUSE": 119,
-    "KEY_STOP": 128,
-    "KEY_RECORD": 167,
-    "KEY_REWIND": 168,
+    "KEY_PLAY":        207,
+    "KEY_PAUSE":       119,
+    "KEY_STOP":        128,
+    "KEY_RECORD":      167,
+    "KEY_REWIND":      168,
     "KEY_FASTFORWARD": 208,
-    "KEY_PREVIOUS": 412,
-    "KEY_NEXT": 407,
+    "KEY_PREVIOUS":    412,
+    "KEY_NEXT":        407,
+    "KEY_SKIPBACK":    165,
+    "KEY_SKIPFORWARD": 163,
 
-    # Additional keys
-    "KEY_INFO": 358,
-    "KEY_EPG": 365,
+    # Info & guide keys
+    "KEY_INFO":     358,
+    "KEY_EPG":      365,
+    "KEY_PVR":      366,
+    "KEY_TIMER":    359,
+
+    # AV & subtitle keys
     "KEY_SUBTITLE": 370,
-    "KEY_TV": 377,
-    "KEY_RADIO": 385,
-    "KEY_AUDIO": 392,
-    "KEY_LIST": 393,
-    "KEY_TEXT": 388,
-    "KEY_HELP": 138,
-    "KEY_VOD": 627,
+    "KEY_AUDIO":    392,
+    "KEY_TEXT":     388,
+    "KEY_ASPECT":   373,
+
+    # Navigation & mode keys
+    "KEY_TV":        377,
+    "KEY_RADIO":     385,
+    "KEY_LIST":      393,
+    "KEY_FAVORITES": 364,
+    "KEY_PIP":       375,
+
+    # System / function keys
+    "KEY_HELP":    138,
+    "KEY_SETUP":   141,
+    "KEY_PORTAL":  156,
+    "KEY_SLEEP":   142,
+    "KEY_OPTIONS": 357,
+    "KEY_CONTEXT": 438,
+    "KEY_F1":      59,
+    "KEY_F2":      60,
+    "KEY_VOD":     627,
 }

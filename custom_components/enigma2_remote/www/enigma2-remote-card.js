@@ -128,6 +128,7 @@ class Enigma2RemoteCard extends HTMLElement {
     const bgColor   = this._cfg('colors.background', '');
     const bdrColor  = this._cfg('colors.border',     'var(--primary-text-color, #888)');
     const showColor = this._cfg('show_color_buttons', true);
+    const showExtra = this._cfg('show_extra_buttons', false);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -360,12 +361,41 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_TV">TV</button>
           </div>
           <div class="row-media">
+            <button class="btn-media" data-key="KEY_SKIPBACK">⏮</button>
             <button class="btn-media" data-key="KEY_REWIND">⏪</button>
             <button class="btn-media" data-key="KEY_PLAY">▶</button>
             <button class="btn-media" data-key="KEY_PAUSE">⏸</button>
             <button class="btn-media" data-key="KEY_STOP">⏹</button>
             <button class="btn-media" data-key="KEY_FASTFORWARD">⏩</button>
+            <button class="btn-media" data-key="KEY_SKIPFORWARD">⏭</button>
           </div>
+          ${showExtra ? `
+          <div class="divider"></div>
+          <div class="row-func">
+            <button class="btn-func" data-key="KEY_TEXT">TXT</button>
+            <button class="btn-func" data-key="KEY_AUDIO">Audio</button>
+            <button class="btn-func" data-key="KEY_SUBTITLE">Sub</button>
+            <button class="btn-func" data-key="KEY_ASPECT">Aspect</button>
+          </div>
+          <div class="row-func">
+            <button class="btn-func" data-key="KEY_PVR">PVR</button>
+            <button class="btn-func" data-key="KEY_RADIO">Radio</button>
+            <button class="btn-func" data-key="KEY_FAVORITES">Fav</button>
+            <button class="btn-func" data-key="KEY_PIP">PIP</button>
+          </div>
+          <div class="row-func">
+            <button class="btn-func" data-key="KEY_SETUP">Setup</button>
+            <button class="btn-func" data-key="KEY_PORTAL">Portal</button>
+            <button class="btn-func" data-key="KEY_SLEEP">Sleep</button>
+            <button class="btn-func" data-key="KEY_TIMER">Timer</button>
+          </div>
+          <div class="row-func">
+            <button class="btn-func" data-key="KEY_OPTIONS">Opt</button>
+            <button class="btn-func" data-key="KEY_CONTEXT">Ctx</button>
+            <button class="btn-func" data-key="KEY_F1">F1</button>
+            <button class="btn-func" data-key="KEY_F2">F2</button>
+          </div>
+          ` : ''}
         </div></div>
       </ha-card>`;
 
@@ -420,6 +450,7 @@ class Enigma2RemoteCard extends HTMLElement {
       name: 'Enigma2 Remote',
       colors: { buttons: '#6d767e', text: '#ffffff', background: '', border: '' },
       show_color_buttons: true,
+      show_extra_buttons: false,
       haptic_feedback: false,
       dimensions: { scale: 1.0, border_width: 1 },
     };
@@ -480,6 +511,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       color_background:   this._hexToRgb(cfg.colors?.background) ?? null,
       color_border:       this._hexToRgb(cfg.colors?.border)     ?? null,
       show_color_buttons: cfg.show_color_buttons !== false,
+      show_extra_buttons: cfg.show_extra_buttons === true,
       haptic_feedback:    cfg.haptic_feedback === true,
       scale:              parseFloat(cfg.dimensions?.scale        ?? 1.0),
       border_width:       parseInt  (cfg.dimensions?.border_width ?? 1),
@@ -499,6 +531,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
         border:     this._rgbToHex(data.color_border)     ?? '',
       },
       show_color_buttons: data.show_color_buttons,
+      show_extra_buttons: data.show_extra_buttons,
       haptic_feedback:    data.haptic_feedback,
       dimensions: {
         scale:        data.scale,
@@ -549,6 +582,11 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       {
         name:     'show_color_buttons',
         label:    'Show Color Buttons (RED / GREEN / YELLOW / BLUE)',
+        selector: { boolean: {} },
+      },
+      {
+        name:     'show_extra_buttons',
+        label:    'Show Extra Buttons (Text, Audio, Sub, PVR, PIP, Setup, Timer, ...)',
         selector: { boolean: {} },
       },
       {
