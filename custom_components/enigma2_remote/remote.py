@@ -112,6 +112,12 @@ class Enigma2Remote(RemoteEntity):
                     )
                 continue
 
+            # ── Mute (uses volume API, not remotecontrol) ──
+            if cmd_upper == "KEY_MUTE":
+                for _ in range(num_repeats):
+                    await self._send_mute()
+                continue
+
             # ── Regular key press ──
             key_code = KEY_CODES.get(cmd_upper)
             if key_code is None:
@@ -126,6 +132,11 @@ class Enigma2Remote(RemoteEntity):
                 await self._send_key(key_code, long_press=(hold > 0))
 
     # ── Internal helpers ──────────────────────────────────────────────────────
+
+    async def _send_mute(self) -> None:
+        """Toggle mute via the volume API (web/vol?set=mute)."""
+        url = f"{self._base_url}/web/vol?set=mute"
+        await self._get(url, context="mute toggle")
 
     async def _send_power_state(self, state: int) -> None:
         """Send a power-state request to /api/powerstate."""

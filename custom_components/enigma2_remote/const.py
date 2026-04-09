@@ -8,7 +8,7 @@ ENIGMA2_CARDS = [
     {
         "name":     "Enigma2 Remote Card",
         "filename": "enigma2-remote-card.js",
-        "version":  "1.7.0",
+        "version":  "1.7.1b1",
     }
 ]
 
@@ -36,9 +36,9 @@ KEY_CODES = {
     "KEY_8": 9,
     "KEY_9": 10,
 
-    # Power & Mute (OpenWebif special codes)
+    # Power (OpenWebif special code)
     "KEY_POWER": 1001,
-    "KEY_MUTE": 1000,
+    # KEY_MUTE is handled via web/vol?set=mute in remote.py, not remotecontrol API
 
     # Volume keys
     "KEY_VOLUMEUP": 115,
