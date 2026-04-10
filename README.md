@@ -24,7 +24,11 @@ A complete Home Assistant integration for controlling Enigma2 set-top boxes (e.g
 
 ## 📸 Preview
 
-![Enigma2 Remote Card](screenshots/card-preview.png)
+<p>
+  <img src="screenshots/card-preview.png" width="32%">
+  <img src="screenshots/card-preview2.png" width="32%">
+  <img src="screenshots/card-preview3.png" width="32%">
+</p>
 
 ## 📋 Prerequisites
 
@@ -195,7 +199,11 @@ data:
 
 ### Remote Control Card
 
-![Enigma2 Remote Card](screenshots/card-preview.png)
+<p>
+  <img src="screenshots/card-preview.png" width="32%">
+  <img src="screenshots/card-preview2.png" width="32%">
+  <img src="screenshots/card-preview3.png" width="32%">
+</p>
 
 ### Visual Card Editor
 
