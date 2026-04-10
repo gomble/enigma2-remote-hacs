@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.7.3 - Brand icons
+
+- **Brand folder added** — integration now self-hosts its icon and logo via the HA Brands Proxy API (requires HA 2026.3+); includes light/dark variants and retina (@2x) versions
+
+---
+
 ## v1.7.2 - Lovelace card improvements & fixes
 
 ### Lovelace Card
