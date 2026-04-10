@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.2b5 - BETA: Lovelace card tweaks
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **EPG moved to extras** — extras bottom row now shows EPG instead of Back (EPG | Opt | Context | Aspect)
+- **History replaces EPG in main row** — main function row now shows History | LIST | TXT
+- **Record button is now red** — visually matches standard remote control convention
+
+---
+
 ## v1.7.2b4 - BETA: Lovelace card improvements
 
 > **Beta release** — not served as default in HACS.

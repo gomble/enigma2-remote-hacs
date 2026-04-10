@@ -299,6 +299,7 @@ class Enigma2RemoteCard extends HTMLElement {
         .btn-media:active { filter: brightness(.7); transform: scale(.91); }
         /* Force text (non-emoji) rendering for media control characters */
         .btn-media { font-variant-emoji: text; }
+        .btn-record { background: #e74c3c !important; color: #fff; }
         /* Ripple */
         button::after {
           content: ''; display: block; position: absolute; inset: 0; pointer-events: none;
@@ -359,7 +360,7 @@ class Enigma2RemoteCard extends HTMLElement {
           </div>
           <div class="divider"></div>
           <div class="row-func">
-            <button class="btn-func" data-key="KEY_EPG">EPG</button>
+            <button class="btn-func" data-key="KEY_HISTORY">History</button>
             <button class="btn-func" data-key="KEY_LIST">${t('list')}</button>
             <button class="btn-func" data-key="KEY_TEXT">TXT</button>
           </div>
@@ -372,7 +373,7 @@ class Enigma2RemoteCard extends HTMLElement {
           </div>
           <div class="row-media">
             <button class="btn-media" data-key="KEY_SKIPBACK">⏮</button>
-            <button class="btn-media" data-key="KEY_RECORD">⏺</button>
+            <button class="btn-media btn-record" data-key="KEY_RECORD">⏺</button>
             <button class="btn-media" data-key="KEY_STOP">⏹</button>
             <button class="btn-media" data-key="KEY_SKIPFORWARD">⏭</button>
           </div>
@@ -401,7 +402,7 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_F2">F2</button>
           </div>
           <div class="row-func">
-            <button class="btn-func" data-key="KEY_BACK">${t('back')}</button>
+            <button class="btn-func" data-key="KEY_EPG">EPG</button>
             <button class="btn-func" data-key="KEY_OPTIONS">Opt</button>
             <button class="btn-func" data-key="KEY_CONTEXT">Context</button>
             <button class="btn-func" data-key="KEY_ASPECT">Aspect</button>
