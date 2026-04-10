@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.2b6 - BETA: Lovelace card tweaks
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **EPG in CH/VOL grid** — bottom-right cell now shows EPG (was: BACK)
+- **Back moved to extras** — extras bottom row now shows Back instead of EPG (Back | Opt | Context | Aspect)
+- **Record button** — button stays normal color, ⏺ dot is now red (was: fully red button)
+
+---
+
 ## v1.7.2b5 - BETA: Lovelace card tweaks
 
 > **Beta release** — not served as default in HACS.
