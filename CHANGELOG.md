@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.7.2b4 - BETA: Lovelace card improvements
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **Standby options toggleable via visual editor** — the five power sub-buttons (Power Off, Restart, Wake Up, Standby) can now be shown/hidden via the "Show Standby Options" toggle in the card editor; the main "Toggle Standby" button is always visible
+- **Numpad `?` / `TXT` replaced** — positions now show `<` (KEY_PREVIOUS, code 412) and `>` (KEY_NEXT, code 407) for prev/next navigation
+- **TXT moved to main EPG/LIST row** — EPG | LIST | TXT is now always visible; TV button removed from that row
+- **TV moved to extras** — TV appears in the extras panel (row: PVR | TV | Radio | Help)
+- **Always-visible transport row added** — ⏮ ⏺ ⏹ ⏭ (Skip Back, Record, Stop, Skip Forward) is now permanently shown below the main media row; record button was previously missing
+- **Fixed emoji rendering for ⏪ / ⏩** — rewind and fast-forward buttons were rendered as color emoji / smiley on some devices; fixed with CSS `font-variant-emoji: text`
+- **Extras section reordered** to match reference layout: TXT/Audio/Sub/Video → PVR/TV/Radio/Help → Setup/Portal/Sleep/Timer → F1/F2 → Back/Opt/Context/Aspect
+
+---
+
 ## v1.5.1 - Fix: HACS resources wiped on update & browser cache not cleared
 
 ### Bug Fixes

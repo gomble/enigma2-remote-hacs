@@ -127,8 +127,9 @@ class Enigma2RemoteCard extends HTMLElement {
     const txtColor  = this._cfg('colors.text',       '#ffffff');
     const bgColor   = this._cfg('colors.background', '');
     const bdrColor  = this._cfg('colors.border',     'var(--primary-text-color, #888)');
-    const showColor = this._cfg('show_color_buttons', true);
-    const showExtra = this._cfg('show_extra_buttons', false);
+    const showColor    = this._cfg('show_color_buttons',    true);
+    const showExtra    = this._cfg('show_extra_buttons',    false);
+    const showStandby  = this._cfg('show_standby_options',  true);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -296,6 +297,8 @@ class Enigma2RemoteCard extends HTMLElement {
           user-select: none; transition: filter .1s, transform .1s;
         }
         .btn-media:active { filter: brightness(.7); transform: scale(.91); }
+        /* Force text (non-emoji) rendering for media control characters */
+        .btn-media { font-variant-emoji: text; }
         /* Ripple */
         button::after {
           content: ''; display: block; position: absolute; inset: 0; pointer-events: none;
@@ -310,13 +313,13 @@ class Enigma2RemoteCard extends HTMLElement {
           <div class="remote-title">${title}</div>
           <div class="power-section">
             <button class="btn-standby" data-command="POWER_STATE_0">⏻ ${t('standby_toggle')}</button>
-            <div class="power-options">
+            ${showStandby ? `<div class="power-options">
               <button class="btn-power-opt" data-command="POWER_STATE_1">${t('power_off')}</button>
               <button class="btn-power-opt" data-command="POWER_STATE_2">${t('receiver_restart')}</button>
               <button class="btn-power-opt" data-command="POWER_STATE_3">${t('gui_restart')}</button>
               <button class="btn-power-opt" data-command="POWER_STATE_4">${t('wake_up')}</button>
               <button class="btn-power-opt" data-command="POWER_STATE_5">${t('standby')}</button>
-            </div>
+            </div>` : ''}
           </div>
           <div class="divider"></div>
           <div class="grid-vc">
@@ -350,15 +353,15 @@ class Enigma2RemoteCard extends HTMLElement {
           ` : ''}
           <div class="grid-num">
             ${[1,2,3,4,5,6,7,8,9].map(n => `<button class="btn-num" data-key="KEY_${n}">${n}</button>`).join('')}
-            <button class="btn-num small" data-key="KEY_HELP">?</button>
+            <button class="btn-num small" data-key="KEY_PREVIOUS">&lt;</button>
             <button class="btn-num"       data-key="KEY_0">0</button>
-            <button class="btn-num small" data-key="KEY_TEXT">TXT</button>
+            <button class="btn-num small" data-key="KEY_NEXT">&gt;</button>
           </div>
           <div class="divider"></div>
           <div class="row-func">
             <button class="btn-func" data-key="KEY_EPG">EPG</button>
             <button class="btn-func" data-key="KEY_LIST">${t('list')}</button>
-            <button class="btn-func" data-key="KEY_TV">TV</button>
+            <button class="btn-func" data-key="KEY_TEXT">TXT</button>
           </div>
           <div class="row-media">
             <button class="btn-media" data-key="KEY_REWIND">⏪</button>
@@ -367,23 +370,25 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-media" data-key="KEY_STOP">⏹</button>
             <button class="btn-media" data-key="KEY_FASTFORWARD">⏩</button>
           </div>
-          ${showExtra ? `
           <div class="row-media">
             <button class="btn-media" data-key="KEY_SKIPBACK">⏮</button>
+            <button class="btn-media" data-key="KEY_RECORD">⏺</button>
+            <button class="btn-media" data-key="KEY_STOP">⏹</button>
             <button class="btn-media" data-key="KEY_SKIPFORWARD">⏭</button>
           </div>
+          ${showExtra ? `
           <div class="divider"></div>
           <div class="row-func">
             <button class="btn-func" data-key="KEY_TEXT">TXT</button>
             <button class="btn-func" data-key="KEY_AUDIO">Audio</button>
             <button class="btn-func" data-key="KEY_SUBTITLE">Sub</button>
-            <button class="btn-func" data-key="KEY_ASPECT">Aspect</button>
+            <button class="btn-func" data-key="KEY_VIDEO">Video</button>
           </div>
           <div class="row-func">
             <button class="btn-func" data-key="KEY_PVR">PVR</button>
+            <button class="btn-func" data-key="KEY_TV">TV</button>
             <button class="btn-func" data-key="KEY_RADIO">Radio</button>
-            <button class="btn-func" data-key="KEY_FAVORITES">Fav</button>
-            <button class="btn-func" data-key="KEY_PIP">PIP</button>
+            <button class="btn-func" data-key="KEY_HELP">Help</button>
           </div>
           <div class="row-func">
             <button class="btn-func" data-key="KEY_SETUP">Setup</button>
@@ -392,10 +397,14 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_TIMER">Timer</button>
           </div>
           <div class="row-func">
-            <button class="btn-func" data-key="KEY_OPTIONS">Opt</button>
-            <button class="btn-func" data-key="KEY_CONTEXT">Ctx</button>
             <button class="btn-func" data-key="KEY_F1">F1</button>
             <button class="btn-func" data-key="KEY_F2">F2</button>
+          </div>
+          <div class="row-func">
+            <button class="btn-func" data-key="KEY_BACK">${t('back')}</button>
+            <button class="btn-func" data-key="KEY_OPTIONS">Opt</button>
+            <button class="btn-func" data-key="KEY_CONTEXT">Context</button>
+            <button class="btn-func" data-key="KEY_ASPECT">Aspect</button>
           </div>
           ` : ''}
         </div></div>
@@ -452,6 +461,7 @@ class Enigma2RemoteCard extends HTMLElement {
       name: 'Enigma2 Remote',
       colors: { buttons: '#6d767e', text: '#ffffff', background: '', border: '' },
       show_color_buttons: true,
+      show_standby_options: true,
       show_extra_buttons: false,
       haptic_feedback: false,
       dimensions: { scale: 1.0, border_width: 1 },
@@ -512,8 +522,9 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       color_text:         this._hexToRgb(cfg.colors?.text)       ?? [255, 255, 255],
       color_background:   this._hexToRgb(cfg.colors?.background) ?? null,
       color_border:       this._hexToRgb(cfg.colors?.border)     ?? null,
-      show_color_buttons: cfg.show_color_buttons !== false,
-      show_extra_buttons: cfg.show_extra_buttons === true,
+      show_color_buttons:   cfg.show_color_buttons   !== false,
+      show_standby_options: cfg.show_standby_options !== false,
+      show_extra_buttons:   cfg.show_extra_buttons   === true,
       haptic_feedback:    cfg.haptic_feedback === true,
       scale:              parseFloat(cfg.dimensions?.scale        ?? 1.0),
       border_width:       parseInt  (cfg.dimensions?.border_width ?? 1),
@@ -532,8 +543,9 @@ class Enigma2RemoteCardEditor extends HTMLElement {
         background: this._rgbToHex(data.color_background) ?? '',
         border:     this._rgbToHex(data.color_border)     ?? '',
       },
-      show_color_buttons: data.show_color_buttons,
-      show_extra_buttons: data.show_extra_buttons,
+      show_color_buttons:   data.show_color_buttons,
+      show_standby_options: data.show_standby_options,
+      show_extra_buttons:   data.show_extra_buttons,
       haptic_feedback:    data.haptic_feedback,
       dimensions: {
         scale:        data.scale,
@@ -587,8 +599,13 @@ class Enigma2RemoteCardEditor extends HTMLElement {
         selector: { boolean: {} },
       },
       {
+        name:     'show_standby_options',
+        label:    'Show Standby Options (Power Off, Restart, Wake Up, Standby)',
+        selector: { boolean: {} },
+      },
+      {
         name:     'show_extra_buttons',
-        label:    'Show Extra Buttons (Text, Audio, Sub, PVR, PIP, Setup, Timer, ...)',
+        label:    'Show Extra Buttons (TXT, Audio, Sub, TV, PVR, Setup, Timer, ...)',
         selector: { boolean: {} },
       },
       {
