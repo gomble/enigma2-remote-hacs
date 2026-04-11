@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="custom_components/enigma2_remote/brand/logo.png" alt="Enigma2 Remote Control" height="80">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="custom_components/enigma2_remote/brand/dark_logo.png">
+    <source media="(prefers-color-scheme: light)" srcset="custom_components/enigma2_remote/brand/logo.png">
+    <img src="custom_components/enigma2_remote/brand/logo.png" alt="Enigma2 Remote Control" height="80">
+  </picture>
 </p>
 
 # Enigma2 Remote Control Integration for Home Assistant
