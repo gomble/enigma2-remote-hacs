@@ -100,12 +100,40 @@ name: Living Room TV
 
 #### Manually (YAML)
 
-Add the card to your dashboard:
+Minimal configuration:
 
 ```yaml
 type: custom:enigma2-remote-card
 entity: remote.enigma2_remote_192_168_1_100
+```
+
+Full configuration with all available options:
+
+```yaml
+type: custom:enigma2-remote-card
+entity: remote.enigma2_remote_192_168_1_100
+
+# Display title at the top of the card
 name: My Enigma2 Box
+
+# Colors (hex or CSS color values)
+colors:
+  buttons: "#6d767e"      # Button background color
+  text: "#ffffff"         # Button text/icon color
+  background: ""          # Card background (leave empty for HA theme default)
+  border: ""              # Remote border color (leave empty for HA theme default)
+
+# Dimensions
+dimensions:
+  scale: 1.0              # Card scale factor (0.5 – 1.5)
+  border_width: 1         # Border width in px (0 – 6)
+
+# Button visibility
+show_color_buttons: true  # Show RED / GREEN / YELLOW / BLUE color buttons
+show_extra_buttons: false # Show extra buttons (Audio, Sub, PVR, PIP, Setup, Timer, ...)
+
+# Haptic feedback (iOS only, via HA Companion App)
+haptic_feedback: false
 ```
 
 ## 🎮 Supported Keys
