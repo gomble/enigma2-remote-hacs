@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="custom_components/enigma2_remote/brand/logo.png" alt="Enigma2 Remote Control" height="80">
+</p>
+
 # Enigma2 Remote Control Integration for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
