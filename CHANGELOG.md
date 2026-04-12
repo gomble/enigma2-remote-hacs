@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.4b1 - BETA: MDI Icons
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **Alle Symbole auf Material Design Icons (`ha-icon`) umgestellt** — SVG-basiert, identisches Rendering auf allen Geräten und Browsern (kein Emoji-Problem mehr auf iOS/Android)
+- Keine externe Abhängigkeit — `ha-icon` wird automatisch mit Home Assistant mitgeliefert
+- Betrifft: Power, Mute (→ `mdi:volume-mute`), Nav-Pfeile (→ Chevrons), Farb-Tasten, alle Media-Tasten (Play/Pause/Stop/Rewind/FF/Skip/Record)
+
+---
+
 ## v1.7.3 - Brand icons
 
 - **Brand folder added** — integration now self-hosts its icon and logo via the HA Brands Proxy API (requires HA 2026.3+); includes light/dark variants and retina (@2x) versions

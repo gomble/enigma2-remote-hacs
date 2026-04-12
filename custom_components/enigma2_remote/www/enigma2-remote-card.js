@@ -205,7 +205,7 @@ class Enigma2RemoteCard extends HTMLElement {
         .vc-menu     { grid-area: menu;     border-radius: 0; font-size: calc(var(--remotewidth)/21) !important; }
         .vc-vol-up   { grid-area: vol_up;   border-radius: 0 calc(var(--remotewidth)/11) 0 0; }
         .vc-ch-down  { grid-area: ch_down;  border-radius: 0; }
-        .vc-mute     { grid-area: mute;     border-radius: 0; background: #e67e22 !important; font-size: calc(var(--remotewidth)/10) !important; }
+        .vc-mute     { grid-area: mute;     border-radius: 0; background: #e67e22 !important; font-size: calc(var(--remotewidth)/21) !important; }
         .vc-vol-down { grid-area: vol_down; border-radius: 0; }
         .vc-exit     { grid-area: exit;     border-radius: 0 0 0 calc(var(--remotewidth)/11); font-size: calc(var(--remotewidth)/20) !important; }
         .vc-info     { grid-area: info;     border-radius: 0; font-size: calc(var(--remotewidth)/20) !important; }
@@ -297,8 +297,12 @@ class Enigma2RemoteCard extends HTMLElement {
           user-select: none; transition: filter .1s, transform .1s;
         }
         .btn-media:active { filter: brightness(.7); transform: scale(.91); }
-        /* Force text (non-emoji) rendering for media control characters */
-        .btn-media { font-variant-emoji: text; }
+        /* MDI icon sizing per button context */
+        .btn-standby ha-icon { --mdc-icon-size: calc(var(--remotewidth)/13); flex-shrink: 0; }
+        .btn-vc ha-icon      { --mdc-icon-size: calc(var(--remotewidth)/7);  }
+        .btn-nav ha-icon     { --mdc-icon-size: calc(var(--remotewidth)/7);  }
+        .btn-color ha-icon   { --mdc-icon-size: calc(var(--remotewidth)/7);  }
+        .btn-media ha-icon   { --mdc-icon-size: calc(var(--remotewidth)/8);  }
         .btn-record { color: #e74c3c; }
         /* Ripple */
         button::after {
@@ -313,7 +317,7 @@ class Enigma2RemoteCard extends HTMLElement {
         <div class="card"><div class="page">
           <div class="remote-title">${title}</div>
           <div class="power-section">
-            <button class="btn-standby" data-command="POWER_STATE_0">⏻ ${t('standby_toggle')}</button>
+            <button class="btn-standby" data-command="POWER_STATE_0"><ha-icon icon="mdi:power"></ha-icon> ${t('standby_toggle')}</button>
             ${showStandby ? `<div class="power-options">
               <button class="btn-power-opt" data-command="POWER_STATE_1">${t('power_off')}</button>
               <button class="btn-power-opt" data-command="POWER_STATE_2">${t('receiver_restart')}</button>
@@ -328,7 +332,7 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-vc vc-menu"     data-key="KEY_MENU">${t('menu')}</button>
             <button class="btn-vc vc-vol-up"   data-key="KEY_VOLUMEUP">VOL+</button>
             <button class="btn-vc vc-ch-down"  data-key="KEY_CHANNELDOWN">CH−</button>
-            <button class="btn-vc vc-mute"     data-key="KEY_MUTE">🔇</button>
+            <button class="btn-vc vc-mute"     data-key="KEY_MUTE"><ha-icon icon="mdi:volume-mute"></ha-icon></button>
             <button class="btn-vc vc-vol-down" data-key="KEY_VOLUMEDOWN">VOL−</button>
             <button class="btn-vc vc-exit"     data-key="KEY_EXIT">${t('exit')}</button>
             <button class="btn-vc vc-info"     data-key="KEY_INFO">${t('info')}</button>
@@ -336,19 +340,19 @@ class Enigma2RemoteCard extends HTMLElement {
           </div>
           <div class="divider"></div>
           <div class="grid-nav">
-            <button class="btn-nav nav-up"    data-key="KEY_UP">▲</button>
-            <button class="btn-nav nav-left"  data-key="KEY_LEFT">◀</button>
+            <button class="btn-nav nav-up"    data-key="KEY_UP"><ha-icon icon="mdi:chevron-up"></ha-icon></button>
+            <button class="btn-nav nav-left"  data-key="KEY_LEFT"><ha-icon icon="mdi:chevron-left"></ha-icon></button>
             <button class="btn-nav btn-ok nav-ok" data-key="KEY_OK">OK</button>
-            <button class="btn-nav nav-right" data-key="KEY_RIGHT">▶</button>
-            <button class="btn-nav nav-down"  data-key="KEY_DOWN">▼</button>
+            <button class="btn-nav nav-right" data-key="KEY_RIGHT"><ha-icon icon="mdi:chevron-right"></ha-icon></button>
+            <button class="btn-nav nav-down"  data-key="KEY_DOWN"><ha-icon icon="mdi:chevron-down"></ha-icon></button>
           </div>
           <div class="divider"></div>
           ${showColor ? `
           <div class="row-color">
-            <button class="btn-color c-red"    data-key="KEY_RED">●</button>
-            <button class="btn-color c-green"  data-key="KEY_GREEN">●</button>
-            <button class="btn-color c-yellow" data-key="KEY_YELLOW">●</button>
-            <button class="btn-color c-blue"   data-key="KEY_BLUE">●</button>
+            <button class="btn-color c-red"    data-key="KEY_RED"><ha-icon icon="mdi:circle"></ha-icon></button>
+            <button class="btn-color c-green"  data-key="KEY_GREEN"><ha-icon icon="mdi:circle"></ha-icon></button>
+            <button class="btn-color c-yellow" data-key="KEY_YELLOW"><ha-icon icon="mdi:circle"></ha-icon></button>
+            <button class="btn-color c-blue"   data-key="KEY_BLUE"><ha-icon icon="mdi:circle"></ha-icon></button>
           </div>
           <div class="divider"></div>
           ` : ''}
@@ -365,17 +369,17 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_TEXT">TXT</button>
           </div>
           <div class="row-media">
-            <button class="btn-media" data-key="KEY_REWIND">⏪</button>
-            <button class="btn-media" data-key="KEY_PLAY">▶</button>
-            <button class="btn-media" data-key="KEY_PAUSE">⏸</button>
-            <button class="btn-media" data-key="KEY_STOP">⏹</button>
-            <button class="btn-media" data-key="KEY_FASTFORWARD">⏩</button>
+            <button class="btn-media" data-key="KEY_REWIND"><ha-icon icon="mdi:rewind"></ha-icon></button>
+            <button class="btn-media" data-key="KEY_PLAY"><ha-icon icon="mdi:play"></ha-icon></button>
+            <button class="btn-media" data-key="KEY_PAUSE"><ha-icon icon="mdi:pause"></ha-icon></button>
+            <button class="btn-media" data-key="KEY_STOP"><ha-icon icon="mdi:stop"></ha-icon></button>
+            <button class="btn-media" data-key="KEY_FASTFORWARD"><ha-icon icon="mdi:fast-forward"></ha-icon></button>
           </div>
           <div class="row-media">
-            <button class="btn-media" data-key="KEY_SKIPBACK">⏮</button>
-            <button class="btn-media btn-record" data-key="KEY_RECORD">⏺</button>
-            <button class="btn-media" data-key="KEY_STOP">⏹</button>
-            <button class="btn-media" data-key="KEY_SKIPFORWARD">⏭</button>
+            <button class="btn-media" data-key="KEY_SKIPBACK"><ha-icon icon="mdi:skip-previous"></ha-icon></button>
+            <button class="btn-media btn-record" data-key="KEY_RECORD"><ha-icon icon="mdi:record-circle"></ha-icon></button>
+            <button class="btn-media" data-key="KEY_STOP"><ha-icon icon="mdi:stop"></ha-icon></button>
+            <button class="btn-media" data-key="KEY_SKIPFORWARD"><ha-icon icon="mdi:skip-next"></ha-icon></button>
           </div>
           ${showExtra ? `
           <div class="divider"></div>
