@@ -303,7 +303,7 @@ class Enigma2RemoteCard extends HTMLElement {
         .btn-nav ha-icon     { --mdc-icon-size: calc(var(--remotewidth)/7);  }
         .btn-color ha-icon   { --mdc-icon-size: calc(var(--remotewidth)/7);  }
         .btn-media ha-icon   { --mdc-icon-size: calc(var(--remotewidth)/8);  }
-        .btn-record { color: #e74c3c; }
+        .btn-record svg { width: calc(var(--remotewidth)/8); height: calc(var(--remotewidth)/8); display: block; }
         /* Ripple */
         button::after {
           content: ''; display: block; position: absolute; inset: 0; pointer-events: none;
@@ -377,7 +377,7 @@ class Enigma2RemoteCard extends HTMLElement {
           </div>
           <div class="row-media">
             <button class="btn-media" data-key="KEY_SKIPBACK"><ha-icon icon="mdi:skip-previous"></ha-icon></button>
-            <button class="btn-media btn-record" data-key="KEY_RECORD"><ha-icon icon="mdi:record-circle"></ha-icon></button>
+            <button class="btn-media btn-record" data-key="KEY_RECORD"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="#e74c3c"/></svg></button>
             <button class="btn-media" data-key="KEY_STOP"><ha-icon icon="mdi:stop"></ha-icon></button>
             <button class="btn-media" data-key="KEY_SKIPFORWARD"><ha-icon icon="mdi:skip-next"></ha-icon></button>
           </div>

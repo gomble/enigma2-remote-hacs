@@ -1,14 +1,24 @@
 # Changelog
 
+## v1.7.4b2 - BETA: Record button styling
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **Record button** — replaced `ha-icon` with inline SVG: white outer ring, transparent gap, red inner dot (`mdi:record-circle-outline` style)
+
+---
+
 ## v1.7.4b1 - BETA: MDI Icons
 
 > **Beta release** — not served as default in HACS.
 
 ### Lovelace Card
 
-- **Alle Symbole auf Material Design Icons (`ha-icon`) umgestellt** — SVG-basiert, identisches Rendering auf allen Geräten und Browsern (kein Emoji-Problem mehr auf iOS/Android)
-- Keine externe Abhängigkeit — `ha-icon` wird automatisch mit Home Assistant mitgeliefert
-- Betrifft: Power, Mute (→ `mdi:volume-mute`), Nav-Pfeile (→ Chevrons), Farb-Tasten, alle Media-Tasten (Play/Pause/Stop/Rewind/FF/Skip/Record)
+- **All symbols replaced with Material Design Icons (`ha-icon`)** — SVG-based, identical rendering across all devices and browsers (no more emoji inconsistencies on iOS/Android)
+- No external dependency — `ha-icon` is built into Home Assistant
+- Affects: Power, Mute (→ `mdi:volume-mute`), navigation arrows (→ chevrons), colour buttons, all media controls (Play/Pause/Stop/Rewind/FF/Skip/Record)
 
 ---
 
