@@ -86,6 +86,220 @@ function _t(lang, key) {
   return dict[key] || ENIGMA2_TRANSLATIONS['en'][key] || key;
 }
 
+// ── Editor Translations ───────────────────────────────────────────────────────
+const EDITOR_TRANSLATIONS = {
+  en: {
+    entity:               'Enigma2 Remote Entity',
+    name:                 'Remote Control Name (optional)',
+    _colors_heading:      'Colors',
+    color_buttons:        'Buttons Color',
+    color_text:           'Text Color',
+    color_background:     'Background Color (leave empty for HA default)',
+    color_border:         'Border Color (leave empty for HA default)',
+    show_color_buttons:   'Show Color Buttons (RED / GREEN / YELLOW / BLUE)',
+    show_standby_options: 'Show Standby Options (Power Off, Restart, Wake Up, Standby)',
+    show_media_buttons:   'Show Media Buttons (Play, Pause, Stop, Rewind, Record, ...)',
+    show_extra_buttons:   'Show Extra Buttons (TXT, Audio, Sub, TV, PVR, Setup, Timer, ...)',
+    haptic_feedback:      'Haptic Feedback (iOS)',
+    _dims_heading:        'Dimensions',
+    scale:                'Card Scale',
+    border_width:         'Card Border Width',
+  },
+  de: {
+    entity:               'Enigma2 Fernbedienung Entity',
+    name:                 'Name der Fernbedienung (optional)',
+    _colors_heading:      'Farben',
+    color_buttons:        'Tastenfarbe',
+    color_text:           'Textfarbe',
+    color_background:     'Hintergrundfarbe (leer = HA Standard)',
+    color_border:         'Rahmenfarbe (leer = HA Standard)',
+    show_color_buttons:   'Farbtasten anzeigen (ROT / GRÜN / GELB / BLAU)',
+    show_standby_options: 'Standby-Optionen anzeigen (Ausschalten, Neustart, Aufwecken, Standby)',
+    show_media_buttons:   'Medientasten anzeigen (Play, Pause, Stop, Rückspulen, Aufnahme, ...)',
+    show_extra_buttons:   'Extra-Tasten anzeigen (TXT, Audio, Sub, TV, PVR, Setup, Timer, ...)',
+    haptic_feedback:      'Haptisches Feedback (iOS)',
+    _dims_heading:        'Abmessungen',
+    scale:                'Kartenskalierung',
+    border_width:         'Rahmenbreite',
+  },
+  es: {
+    entity:               'Entidad Enigma2 Remote',
+    name:                 'Nombre del mando (opcional)',
+    _colors_heading:      'Colores',
+    color_buttons:        'Color de botones',
+    color_text:           'Color de texto',
+    color_background:     'Color de fondo (vacío = predeterminado HA)',
+    color_border:         'Color de borde (vacío = predeterminado HA)',
+    show_color_buttons:   'Mostrar botones de color (ROJO / VERDE / AMARILLO / AZUL)',
+    show_standby_options: 'Mostrar opciones de espera (Apagar, Reiniciar, Despertar, Espera)',
+    show_media_buttons:   'Mostrar botones multimedia (Play, Pausa, Stop, Rebobinar, Grabar, ...)',
+    show_extra_buttons:   'Mostrar botones extra (TXT, Audio, Sub, TV, PVR, Setup, Temporizador, ...)',
+    haptic_feedback:      'Retroalimentación háptica (iOS)',
+    _dims_heading:        'Dimensiones',
+    scale:                'Escala de la tarjeta',
+    border_width:         'Ancho del borde',
+  },
+  fr: {
+    entity:               'Entité Enigma2 Remote',
+    name:                 'Nom de la télécommande (optionnel)',
+    _colors_heading:      'Couleurs',
+    color_buttons:        'Couleur des boutons',
+    color_text:           'Couleur du texte',
+    color_background:     'Couleur de fond (vide = défaut HA)',
+    color_border:         'Couleur de bordure (vide = défaut HA)',
+    show_color_buttons:   'Afficher les boutons couleur (ROUGE / VERT / JAUNE / BLEU)',
+    show_standby_options: 'Afficher les options veille (Éteindre, Redémarrer, Réveiller, Veille)',
+    show_media_buttons:   'Afficher les boutons média (Lecture, Pause, Stop, Retour, Enregistrer, ...)',
+    show_extra_buttons:   'Afficher les boutons extra (TXT, Audio, Sub, TV, PVR, Config, Minuterie, ...)',
+    haptic_feedback:      'Retour haptique (iOS)',
+    _dims_heading:        'Dimensions',
+    scale:                'Échelle de la carte',
+    border_width:         'Largeur de la bordure',
+  },
+  it: {
+    entity:               'Entità Enigma2 Remote',
+    name:                 'Nome del telecomando (opzionale)',
+    _colors_heading:      'Colori',
+    color_buttons:        'Colore pulsanti',
+    color_text:           'Colore testo',
+    color_background:     'Colore sfondo (vuoto = predefinito HA)',
+    color_border:         'Colore bordo (vuoto = predefinito HA)',
+    show_color_buttons:   'Mostra pulsanti colore (ROSSO / VERDE / GIALLO / BLU)',
+    show_standby_options: 'Mostra opzioni standby (Spegni, Riavvia, Sveglia, Standby)',
+    show_media_buttons:   'Mostra pulsanti media (Play, Pausa, Stop, Riavvolgi, Registra, ...)',
+    show_extra_buttons:   'Mostra pulsanti extra (TXT, Audio, Sub, TV, PVR, Setup, Timer, ...)',
+    haptic_feedback:      'Feedback aptico (iOS)',
+    _dims_heading:        'Dimensioni',
+    scale:                'Scala della card',
+    border_width:         'Larghezza bordo',
+  },
+  nl: {
+    entity:               'Enigma2 Remote Entiteit',
+    name:                 'Naam afstandsbediening (optioneel)',
+    _colors_heading:      'Kleuren',
+    color_buttons:        'Knopkleur',
+    color_text:           'Tekstkleur',
+    color_background:     'Achtergrondkleur (leeg = HA standaard)',
+    color_border:         'Randkleur (leeg = HA standaard)',
+    show_color_buttons:   'Kleurknoppen tonen (ROOD / GROEN / GEEL / BLAUW)',
+    show_standby_options: 'Standby-opties tonen (Uitschakelen, Herstart, Wekken, Standby)',
+    show_media_buttons:   'Mediaknoppen tonen (Play, Pauze, Stop, Terugspoelen, Opnemen, ...)',
+    show_extra_buttons:   'Extra knoppen tonen (TXT, Audio, Sub, TV, PVR, Setup, Timer, ...)',
+    haptic_feedback:      'Haptische feedback (iOS)',
+    _dims_heading:        'Afmetingen',
+    scale:                'Kaartschaal',
+    border_width:         'Randbreedte',
+  },
+  pl: {
+    entity:               'Encja Enigma2 Remote',
+    name:                 'Nazwa pilota (opcjonalnie)',
+    _colors_heading:      'Kolory',
+    color_buttons:        'Kolor przycisków',
+    color_text:           'Kolor tekstu',
+    color_background:     'Kolor tła (puste = domyślny HA)',
+    color_border:         'Kolor obramowania (puste = domyślny HA)',
+    show_color_buttons:   'Pokaż przyciski kolorów (CZERWONY / ZIELONY / ŻÓŁTY / NIEBIESKI)',
+    show_standby_options: 'Pokaż opcje czuwania (Wyłącz, Uruchom ponownie, Wybudź, Czuwanie)',
+    show_media_buttons:   'Pokaż przyciski mediów (Play, Pauza, Stop, Przewijanie, Nagrywanie, ...)',
+    show_extra_buttons:   'Pokaż dodatkowe przyciski (TXT, Audio, Sub, TV, PVR, Setup, Timer, ...)',
+    haptic_feedback:      'Wibracje (iOS)',
+    _dims_heading:        'Wymiary',
+    scale:                'Skala karty',
+    border_width:         'Szerokość obramowania',
+  },
+  pt: {
+    entity:               'Entidade Enigma2 Remote',
+    name:                 'Nome do controlo remoto (opcional)',
+    _colors_heading:      'Cores',
+    color_buttons:        'Cor dos botões',
+    color_text:           'Cor do texto',
+    color_background:     'Cor de fundo (vazio = padrão HA)',
+    color_border:         'Cor da borda (vazio = padrão HA)',
+    show_color_buttons:   'Mostrar botões de cor (VERMELHO / VERDE / AMARELO / AZUL)',
+    show_standby_options: 'Mostrar opções de espera (Desligar, Reiniciar, Despertar, Espera)',
+    show_media_buttons:   'Mostrar botões de media (Play, Pausa, Stop, Retroceder, Gravar, ...)',
+    show_extra_buttons:   'Mostrar botões extra (TXT, Áudio, Sub, TV, PVR, Setup, Timer, ...)',
+    haptic_feedback:      'Feedback háptico (iOS)',
+    _dims_heading:        'Dimensões',
+    scale:                'Escala do cartão',
+    border_width:         'Largura da borda',
+  },
+  ru: {
+    entity:               'Объект Enigma2 Remote',
+    name:                 'Название пульта (необязательно)',
+    _colors_heading:      'Цвета',
+    color_buttons:        'Цвет кнопок',
+    color_text:           'Цвет текста',
+    color_background:     'Цвет фона (пусто = по умолчанию HA)',
+    color_border:         'Цвет рамки (пусто = по умолчанию HA)',
+    show_color_buttons:   'Показать цветные кнопки (КРАСНЫЙ / ЗЕЛЁНЫЙ / ЖЁЛТЫЙ / СИНИЙ)',
+    show_standby_options: 'Показать опции ожидания (Выключить, Перезапустить, Пробудить, Ожидание)',
+    show_media_buttons:   'Показать медиакнопки (Воспр., Пауза, Стоп, Перемотка, Запись, ...)',
+    show_extra_buttons:   'Показать доп. кнопки (TXT, Аудио, Sub, TV, PVR, Setup, Таймер, ...)',
+    haptic_feedback:      'Тактильная обратная связь (iOS)',
+    _dims_heading:        'Размеры',
+    scale:                'Масштаб карточки',
+    border_width:         'Ширина рамки',
+  },
+  tr: {
+    entity:               'Enigma2 Remote Varlığı',
+    name:                 'Uzaktan kumanda adı (isteğe bağlı)',
+    _colors_heading:      'Renkler',
+    color_buttons:        'Düğme rengi',
+    color_text:           'Metin rengi',
+    color_background:     'Arka plan rengi (boş = HA varsayılanı)',
+    color_border:         'Kenarlık rengi (boş = HA varsayılanı)',
+    show_color_buttons:   'Renk düğmelerini göster (KIRMIZI / YEŞİL / SARI / MAVİ)',
+    show_standby_options: 'Bekleme seçeneklerini göster (Kapat, Yeniden Başlat, Uyandır, Bekleme)',
+    show_media_buttons:   'Medya düğmelerini göster (Oynat, Duraklat, Durdur, Geri Sar, Kaydet, ...)',
+    show_extra_buttons:   'Ekstra düğmeleri göster (TXT, Ses, Alt Yazı, TV, PVR, Kurulum, Zamanlayıcı, ...)',
+    haptic_feedback:      'Dokunsal geri bildirim (iOS)',
+    _dims_heading:        'Boyutlar',
+    scale:                'Kart ölçeği',
+    border_width:         'Kenarlık genişliği',
+  },
+  zh: {
+    entity:               'Enigma2 远程实体',
+    name:                 '遥控器名称（可选）',
+    _colors_heading:      '颜色配置',
+    color_buttons:        '按钮颜色',
+    color_text:           '文字颜色',
+    color_background:     '背景颜色（空 = HA 默认）',
+    color_border:         '边框颜色（空 = HA 默认）',
+    show_color_buttons:   '显示颜色按钮（红 / 绿 / 黄 / 蓝）',
+    show_standby_options: '显示待机选项（关机、重启、唤醒、待机）',
+    show_media_buttons:   '显示媒体按钮（播放、暂停、停止、倒带、录制…）',
+    show_extra_buttons:   '显示扩展按钮（TXT、音频、字幕、TV、PVR、设置、定时器…）',
+    haptic_feedback:      '触觉反馈（iOS）',
+    _dims_heading:        '尺寸',
+    scale:                '卡片缩放',
+    border_width:         '边框宽度',
+  },
+  ar: {
+    entity:               'كيان Enigma2 Remote',
+    name:                 'اسم جهاز التحكم (اختياري)',
+    _colors_heading:      'الألوان',
+    color_buttons:        'لون الأزرار',
+    color_text:           'لون النص',
+    color_background:     'لون الخلفية (فارغ = افتراضي HA)',
+    color_border:         'لون الحدود (فارغ = افتراضي HA)',
+    show_color_buttons:   'إظهار أزرار الألوان (أحمر / أخضر / أصفر / أزرق)',
+    show_standby_options: 'إظهار خيارات الاستعداد (إيقاف، إعادة تشغيل، تنبيه، استعداد)',
+    show_media_buttons:   'إظهار أزرار الوسائط (تشغيل، إيقاف مؤقت، إيقاف، ترجيع، تسجيل...)',
+    show_extra_buttons:   'إظهار الأزرار الإضافية (TXT، صوت، ترجمة، TV، PVR، إعداد، مؤقت...)',
+    haptic_feedback:      'التغذية الراجعة اللمسية (iOS)',
+    _dims_heading:        'الأبعاد',
+    scale:                'مقياس البطاقة',
+    border_width:         'عرض الحدود',
+  },
+};
+
+function _et(lang, key) {
+  const base = lang ? lang.split('-')[0].toLowerCase() : 'en';
+  const dict = EDITOR_TRANSLATIONS[base] || EDITOR_TRANSLATIONS['en'];
+  return dict[key] || EDITOR_TRANSLATIONS['en'][key] || key;
+}
+
 // ── Card ─────────────────────────────────────────────────────────────────────
 class Enigma2RemoteCard extends HTMLElement {
   constructor() {
@@ -130,6 +344,7 @@ class Enigma2RemoteCard extends HTMLElement {
     const showColor    = this._cfg('show_color_buttons',    true);
     const showExtra    = this._cfg('show_extra_buttons',    false);
     const showStandby  = this._cfg('show_standby_options',  true);
+    const showMedia    = this._cfg('show_media_buttons',    true);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -303,7 +518,7 @@ class Enigma2RemoteCard extends HTMLElement {
         .btn-nav ha-icon     { --mdc-icon-size: calc(var(--remotewidth)/7);  }
         .btn-color ha-icon   { --mdc-icon-size: calc(var(--remotewidth)/7);  }
         .btn-media ha-icon   { --mdc-icon-size: calc(var(--remotewidth)/8);  }
-        .btn-record svg { width: calc(var(--remotewidth)/8); height: calc(var(--remotewidth)/8); display: block; }
+        .btn-record { color: #e74c3c; }
         /* Ripple */
         button::after {
           content: ''; display: block; position: absolute; inset: 0; pointer-events: none;
@@ -368,6 +583,7 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_LIST">${t('list')}</button>
             <button class="btn-func" data-key="KEY_TEXT">TXT</button>
           </div>
+          ${showMedia ? `
           <div class="row-media">
             <button class="btn-media" data-key="KEY_REWIND"><ha-icon icon="mdi:rewind"></ha-icon></button>
             <button class="btn-media" data-key="KEY_PLAY"><ha-icon icon="mdi:play"></ha-icon></button>
@@ -377,10 +593,11 @@ class Enigma2RemoteCard extends HTMLElement {
           </div>
           <div class="row-media">
             <button class="btn-media" data-key="KEY_SKIPBACK"><ha-icon icon="mdi:skip-previous"></ha-icon></button>
-            <button class="btn-media btn-record" data-key="KEY_RECORD"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="#e74c3c"/></svg></button>
+            <button class="btn-media btn-record" data-key="KEY_RECORD"><ha-icon icon="mdi:record"></ha-icon></button>
             <button class="btn-media" data-key="KEY_STOP"><ha-icon icon="mdi:stop"></ha-icon></button>
             <button class="btn-media" data-key="KEY_SKIPFORWARD"><ha-icon icon="mdi:skip-next"></ha-icon></button>
           </div>
+          ` : ''}
           ${showExtra ? `
           <div class="divider"></div>
           <div class="row-func">
@@ -467,6 +684,7 @@ class Enigma2RemoteCard extends HTMLElement {
       colors: { buttons: '#6d767e', text: '#ffffff', background: '', border: '' },
       show_color_buttons: true,
       show_standby_options: true,
+      show_media_buttons: true,
       show_extra_buttons: false,
       haptic_feedback: false,
       dimensions: { scale: 1.0, border_width: 1 },
@@ -529,6 +747,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       color_border:       this._hexToRgb(cfg.colors?.border)     ?? null,
       show_color_buttons:   cfg.show_color_buttons   !== false,
       show_standby_options: cfg.show_standby_options !== false,
+      show_media_buttons:   cfg.show_media_buttons   !== false,
       show_extra_buttons:   cfg.show_extra_buttons   === true,
       haptic_feedback:    cfg.haptic_feedback === true,
       scale:              parseFloat(cfg.dimensions?.scale        ?? 1.0),
@@ -550,6 +769,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       },
       show_color_buttons:   data.show_color_buttons,
       show_standby_options: data.show_standby_options,
+      show_media_buttons:   data.show_media_buttons,
       show_extra_buttons:   data.show_extra_buttons,
       haptic_feedback:    data.haptic_feedback,
       dimensions: {
@@ -606,6 +826,11 @@ class Enigma2RemoteCardEditor extends HTMLElement {
       {
         name:     'show_standby_options',
         label:    'Show Standby Options (Power Off, Restart, Wake Up, Standby)',
+        selector: { boolean: {} },
+      },
+      {
+        name:     'show_media_buttons',
+        label:    'Show Media Buttons (Play, Pause, Stop, Rewind, Record, ...)',
         selector: { boolean: {} },
       },
       {
@@ -683,7 +908,7 @@ class Enigma2RemoteCardEditor extends HTMLElement {
     form.hass         = this._hass;
     form.schema       = this._schema();
     form.data         = this._toFormData(this._config);
-    form.computeLabel = (s) => s.label || s.name;
+    form.computeLabel = (s) => _et(this._hass?.language, s.name);
 
     // value-changed fires on every user interaction — DO NOT re-render here
     form.addEventListener('value-changed', e => {
