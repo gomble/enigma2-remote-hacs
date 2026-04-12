@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.4b3 - BETA: Translated editor + media toggle + record button
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **Visual editor fully translated** — all labels now adapt to the HA language setting (de, en, es, fr, it, nl, pl, pt, ru, tr, zh, ar)
+- **Show Media Buttons toggle** — playback section (Play/Pause/Stop/Rewind/Record/Skip) can now be hidden via the visual editor
+- **Record button** — uses `mdi:record` (red) via `ha-icon`
+
+---
+
 ## v1.7.4b2 - BETA: Record button styling
 
 > **Beta release** — not served as default in HACS.
