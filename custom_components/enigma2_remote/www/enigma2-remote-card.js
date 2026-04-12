@@ -305,7 +305,9 @@ class Enigma2RemoteCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this._lang = null;
+    this._lang        = null;
+    this._kbdOpen     = false;
+    this._shiftActive = false;
   }
 
   setConfig(config) {
@@ -364,7 +366,11 @@ class Enigma2RemoteCard extends HTMLElement {
         }
         .card {
           display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
           justify-content: center;
+          align-items: flex-start;
+          gap: calc(var(--remotewidth) / 13);
           padding: 12px 8px;
           background: transparent;
         }
@@ -512,7 +518,47 @@ class Enigma2RemoteCard extends HTMLElement {
           user-select: none; transition: filter .1s, transform .1s;
         }
         .btn-media:active { filter: brightness(.7); transform: scale(.91); }
+        /* Title row with keyboard toggle */
+        .title-row {
+          width: 100%; display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .btn-kbd-toggle {
+          position: absolute; right: 0; background: transparent; border: none;
+          color: var(--primary-text-color); cursor: pointer; padding: 2px;
+          border-radius: 4px; display: flex; align-items: center;
+          -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+        }
+        .btn-kbd-toggle.active { color: var(--accent-color, #ff9800); }
+        /* Keyboard panel */
+        .kbd-panel {
+          width: var(--remotewidth);
+          border: var(--border-width) solid var(--border-color);
+          border-radius: calc(var(--remotewidth) / 10);
+          padding: calc(var(--remotewidth) / 16);
+          display: flex; flex-direction: column; gap: 4px;
+          background: var(--ha-card-background, var(--card-background-color, #1c1c1c));
+          box-sizing: border-box;
+        }
+        .kbd-panel[hidden] { display: none; }
+        .kbd-row { display: flex; gap: 3px; justify-content: center; }
+        .btn-key {
+          flex: 1; min-width: 0;
+          background: var(--btn-color); border: none; color: var(--btn-text);
+          cursor: pointer; border-radius: calc(var(--remotewidth) / 30);
+          font-size: calc(var(--remotewidth) / 18); font-weight: 500;
+          height: calc(var(--remotewidth) / 8);
+          display: flex; align-items: center; justify-content: center;
+          position: relative; overflow: hidden;
+          -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+          user-select: none; transition: filter .12s; box-sizing: border-box;
+        }
+        .btn-key:active { filter: brightness(.7); }
+        .btn-key.wide    { flex: 1.6; }
+        .btn-key.space-bar { flex: 5; }
+        .btn-key.shift-active { background: var(--accent-color, #ff9800); }
+        .btn-key ha-icon { --mdc-icon-size: calc(var(--remotewidth) / 12); }
         /* MDI icon sizing per button context */
+        .btn-kbd-toggle ha-icon { --mdc-icon-size: calc(var(--remotewidth)/12); }
         .btn-standby ha-icon { --mdc-icon-size: calc(var(--remotewidth)/13); flex-shrink: 0; }
         .btn-vc ha-icon      { --mdc-icon-size: calc(var(--remotewidth)/7);  }
         .btn-nav ha-icon     { --mdc-icon-size: calc(var(--remotewidth)/7);  }
@@ -530,7 +576,12 @@ class Enigma2RemoteCard extends HTMLElement {
       </style>
       <ha-card>
         <div class="card"><div class="page">
-          <div class="remote-title">${title}</div>
+          <div class="title-row">
+            <div class="remote-title">${title}</div>
+            <button class="btn-kbd-toggle${this._kbdOpen ? ' active' : ''}" id="kbd-toggle">
+              <ha-icon icon="mdi:keyboard"></ha-icon>
+            </button>
+          </div>
           <div class="power-section">
             <button class="btn-standby" data-command="POWER_STATE_0"><ha-icon icon="mdi:power"></ha-icon> ${t('standby_toggle')}</button>
             ${showStandby ? `<div class="power-options">
@@ -629,7 +680,44 @@ class Enigma2RemoteCard extends HTMLElement {
             <button class="btn-func" data-key="KEY_ASPECT">Aspect</button>
           </div>
           ` : ''}
-        </div></div>
+        </div>
+        <div class="kbd-panel" id="kbd-panel"${this._kbdOpen ? '' : ' hidden'}>
+          <div class="kbd-row">
+            ${['1','2','3','4','5','6','7','8','9','0'].map((n,i) =>
+              `<button class="btn-key" data-kbd-key="KEY_${n}">${n}</button>`
+            ).join('')}
+          </div>
+          <div class="kbd-row">
+            ${[['Q','KEY_Q'],['W','KEY_W'],['E','KEY_E'],['R','KEY_R'],['T','KEY_T'],
+               ['Z','KEY_Z'],['U','KEY_U'],['I','KEY_I'],['O','KEY_O'],['P','KEY_P']]
+              .map(([l,k]) => `<button class="btn-key" data-kbd-key="${k}">${l}</button>`).join('')}
+          </div>
+          <div class="kbd-row">
+            ${[['A','KEY_A'],['S','KEY_S'],['D','KEY_D'],['F','KEY_F'],['G','KEY_G'],
+               ['H','KEY_H'],['J','KEY_J'],['K','KEY_K'],['L','KEY_L']]
+              .map(([l,k]) => `<button class="btn-key" data-kbd-key="${k}">${l}</button>`).join('')}
+          </div>
+          <div class="kbd-row">
+            <button class="btn-key wide${this._shiftActive ? ' shift-active' : ''}" id="kbd-shift">
+              <ha-icon icon="mdi:arrow-up-bold"></ha-icon>
+            </button>
+            ${[['Y','KEY_Y'],['X','KEY_X'],['C','KEY_C'],['V','KEY_V'],
+               ['B','KEY_B'],['N','KEY_N'],['M','KEY_M']]
+              .map(([l,k]) => `<button class="btn-key" data-kbd-key="${k}">${l}</button>`).join('')}
+            <button class="btn-key wide" data-kbd-key="KEY_BACKSPACE">
+              <ha-icon icon="mdi:backspace-outline"></ha-icon>
+            </button>
+          </div>
+          <div class="kbd-row">
+            <button class="btn-key wide" data-kbd-key="KEY_MINUS">-</button>
+            <button class="btn-key wide" data-kbd-key="KEY_DOT">.</button>
+            <button class="btn-key space-bar" data-kbd-key="KEY_SPACE">space</button>
+            <button class="btn-key wide" data-kbd-key="KEY_ENTER">
+              <ha-icon icon="mdi:keyboard-return"></ha-icon>
+            </button>
+          </div>
+        </div>
+        </div>
       </ha-card>`;
 
     this._setupListeners();
@@ -643,6 +731,51 @@ class Enigma2RemoteCard extends HTMLElement {
         detail: 'light', bubbles: true, composed: true,
       }));
     };
+    // ── Keyboard toggle ───────────────────────────────────────────────────────
+    const kbdToggle = this.shadowRoot.getElementById('kbd-toggle');
+    const kbdPanel  = this.shadowRoot.getElementById('kbd-panel');
+    if (kbdToggle && kbdPanel) {
+      kbdToggle.addEventListener('click', () => {
+        this._kbdOpen = !this._kbdOpen;
+        kbdPanel.toggleAttribute('hidden', !this._kbdOpen);
+        kbdToggle.classList.toggle('active', this._kbdOpen);
+      });
+    }
+
+    // ── Keyboard shift button ─────────────────────────────────────────────────
+    const shiftBtn = this.shadowRoot.getElementById('kbd-shift');
+    if (shiftBtn) {
+      shiftBtn.addEventListener('click', () => {
+        this._shiftActive = !this._shiftActive;
+        shiftBtn.classList.toggle('shift-active', this._shiftActive);
+      });
+      shiftBtn.addEventListener('touchstart', e => { e.preventDefault(); }, { passive: false });
+      shiftBtn.addEventListener('touchend',   e => { e.preventDefault(); }, { passive: false });
+    }
+
+    // ── Keyboard letter/symbol buttons ────────────────────────────────────────
+    if (kbdPanel) {
+      kbdPanel.querySelectorAll('[data-kbd-key]').forEach(btn => {
+        const sendKbd = () => {
+          if (this._shiftActive) {
+            this._send('KEY_LEFTSHIFT', false);
+            this._shiftActive = false;
+            if (shiftBtn) shiftBtn.classList.remove('shift-active');
+          }
+          this._send(btn.getAttribute('data-kbd-key'), false);
+        };
+        let touched = false;
+        btn.addEventListener('touchstart', e => {
+          e.preventDefault(); touched = true; sendKbd();
+        }, { passive: false });
+        btn.addEventListener('touchend', e => {
+          e.preventDefault(); setTimeout(() => { touched = false; }, 300);
+        }, { passive: false });
+        btn.addEventListener('click', () => { if (!touched) sendKbd(); });
+      });
+    }
+
+    // ── Remote buttons ────────────────────────────────────────────────────────
     this.shadowRoot.querySelectorAll('[data-key],[data-command]').forEach(btn => {
       let pressTimer, touchHandled = false;
       const key = () => btn.getAttribute('data-key') || btn.getAttribute('data-command');

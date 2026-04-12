@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.7.4b4 - BETA: QWERTZ keyboard panel
+
+> **Beta release** — not served as default in HACS.
+
+### Lovelace Card
+
+- **QWERTZ keyboard panel** — appears to the right of the remote, toggled via keyboard icon in the title bar
+- Layout: numbers row, Q–P, A–L, Shift + Y–M + Backspace, minus/dot/space/enter
+- **Shift key** (one-shot): sends `KEY_LEFTSHIFT` before the next letter for uppercase input
+- Panel state (open/closed) survives HA language changes without re-render
+
+### Integration
+
+- Added letter key codes A–Z, Space, Backspace, Enter, Shift, Dot, Comma, Minus to `KEY_CODES` in `const.py`
+
+---
+
 ## v1.7.4b3 - BETA: Translated editor + media toggle + record button
 
 > **Beta release** — not served as default in HACS.

@@ -106,4 +106,21 @@ KEY_CODES = {
     "KEY_F1":      59,
     "KEY_F2":      60,
     "KEY_VOD":     627,
+
+    # Letter keys (keyboard panel)
+    "KEY_A": 30, "KEY_B": 48, "KEY_C": 46, "KEY_D": 32, "KEY_E": 18,
+    "KEY_F": 33, "KEY_G": 34, "KEY_H": 35, "KEY_I": 23, "KEY_J": 36,
+    "KEY_K": 37, "KEY_L": 38, "KEY_M": 50, "KEY_N": 49, "KEY_O": 24,
+    "KEY_P": 25, "KEY_Q": 16, "KEY_R": 19, "KEY_S": 31, "KEY_T": 20,
+    "KEY_U": 22, "KEY_V": 47, "KEY_W": 17, "KEY_X": 45, "KEY_Y": 21,
+    "KEY_Z": 44,
+
+    # Typing utility keys
+    "KEY_SPACE":     57,
+    "KEY_BACKSPACE": 14,
+    "KEY_ENTER":     28,
+    "KEY_LEFTSHIFT": 42,
+    "KEY_DOT":       52,
+    "KEY_COMMA":     51,
+    "KEY_MINUS":     12,
 }
