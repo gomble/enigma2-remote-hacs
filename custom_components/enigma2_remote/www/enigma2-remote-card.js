@@ -86,6 +86,28 @@ function _t(lang, key) {
   return dict[key] || ENIGMA2_TRANSLATIONS['en'][key] || key;
 }
 
+// ── T9 Multi-Tap Map ──────────────────────────────────────────────────────────
+const T9_CHARS = {
+  '1': [...'.:;+-*/=_@#$%&'],
+  '2': [...'abcäàä2ABCAAA'],
+  '3': [...'defdéé3DEFE'],
+  '4': [...'ghi4GHI'],
+  '5': [...'jkl5JKL'],
+  '6': [...'mnoöó6MNOO'],
+  '7': [...'pqrsß7PQRS'],
+  '8': [...'tuvüù8TUVU'],
+  '9': [...'wxyz9WXYZ'],
+  '0': [...'0,?!\'"\\()<>[]{}~^`|'],
+};
+const T9_LOOKUP = {};
+for (const [digit, chars] of Object.entries(T9_CHARS)) {
+  chars.forEach((ch, idx) => {
+    if (!(ch in T9_LOOKUP)) {
+      T9_LOOKUP[ch] = { key: `KEY_${digit}`, count: idx + 1 };
+    }
+  });
+}
+
 // ── Editor Translations ───────────────────────────────────────────────────────
 const EDITOR_TRANSLATIONS = {
   en: {
@@ -307,7 +329,10 @@ class Enigma2RemoteCard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this._lang        = null;
     this._kbdOpen     = false;
-    this._shiftActive = false;
+    this._t9LastKey   = null;
+    this._t9LastCount = 0;
+    this._t9Active    = false;
+    this._t9Timer     = null;
   }
 
   setConfig(config) {
@@ -683,38 +708,30 @@ class Enigma2RemoteCard extends HTMLElement {
         </div>
         <div class="kbd-panel" id="kbd-panel"${this._kbdOpen ? '' : ' hidden'}>
           <div class="kbd-row">
-            ${['1','2','3','4','5','6','7','8','9','0'].map((n,i) =>
-              `<button class="btn-key" data-kbd-key="KEY_${n}">${n}</button>`
+            ${['1','2','3','4','5','6','7','8','9','0'].map(n =>
+              `<button class="btn-key t9-digit" data-kbd-char="${n}" title="${(T9_CHARS[n]||[]).join(' ')}">${n}</button>`
             ).join('')}
           </div>
           <div class="kbd-row">
-            ${[['Q','KEY_Q'],['W','KEY_W'],['E','KEY_E'],['R','KEY_R'],['T','KEY_T'],
-               ['Z','KEY_Z'],['U','KEY_U'],['I','KEY_I'],['O','KEY_O'],['P','KEY_P']]
-              .map(([l,k]) => `<button class="btn-key" data-kbd-key="${k}">${l}</button>`).join('')}
+            ${['Q','W','E','R','T','Z','U','I','O','P']
+              .map(l => `<button class="btn-key" data-kbd-char="${l}">${l}</button>`).join('')}
           </div>
           <div class="kbd-row">
-            ${[['A','KEY_A'],['S','KEY_S'],['D','KEY_D'],['F','KEY_F'],['G','KEY_G'],
-               ['H','KEY_H'],['J','KEY_J'],['K','KEY_K'],['L','KEY_L']]
-              .map(([l,k]) => `<button class="btn-key" data-kbd-key="${k}">${l}</button>`).join('')}
+            ${['A','S','D','F','G','H','J','K','L']
+              .map(l => `<button class="btn-key" data-kbd-char="${l}">${l}</button>`).join('')}
           </div>
           <div class="kbd-row">
-            <button class="btn-key wide${this._shiftActive ? ' shift-active' : ''}" id="kbd-shift">
-              <ha-icon icon="mdi:arrow-up-bold"></ha-icon>
-            </button>
-            ${[['Y','KEY_Y'],['X','KEY_X'],['C','KEY_C'],['V','KEY_V'],
-               ['B','KEY_B'],['N','KEY_N'],['M','KEY_M']]
-              .map(([l,k]) => `<button class="btn-key" data-kbd-key="${k}">${l}</button>`).join('')}
-            <button class="btn-key wide" data-kbd-key="KEY_BACKSPACE">
+            <button class="btn-key wide" id="kbd-backspace">
               <ha-icon icon="mdi:backspace-outline"></ha-icon>
             </button>
-          </div>
-          <div class="kbd-row">
-            <button class="btn-key wide" data-kbd-key="KEY_MINUS">-</button>
-            <button class="btn-key wide" data-kbd-key="KEY_DOT">.</button>
-            <button class="btn-key space-bar" data-kbd-key="KEY_SPACE">space</button>
+            ${['Y','X','C','V','B','N','M']
+              .map(l => `<button class="btn-key" data-kbd-char="${l}">${l}</button>`).join('')}
             <button class="btn-key wide" data-kbd-key="KEY_ENTER">
               <ha-icon icon="mdi:keyboard-return"></ha-icon>
             </button>
+          </div>
+          <div class="kbd-row">
+            <button class="btn-key space-bar" data-kbd-key="KEY_SPACE">space</button>
           </div>
         </div>
         </div>
@@ -742,36 +759,47 @@ class Enigma2RemoteCard extends HTMLElement {
       });
     }
 
-    // ── Keyboard shift button ─────────────────────────────────────────────────
-    const shiftBtn = this.shadowRoot.getElementById('kbd-shift');
-    if (shiftBtn) {
-      shiftBtn.addEventListener('click', () => {
-        this._shiftActive = !this._shiftActive;
-        shiftBtn.classList.toggle('shift-active', this._shiftActive);
-      });
-      shiftBtn.addEventListener('touchstart', e => { e.preventDefault(); }, { passive: false });
-      shiftBtn.addEventListener('touchend',   e => { e.preventDefault(); }, { passive: false });
+    // ── Keyboard backspace button ─────────────────────────────────────────────
+    const bsBtn = this.shadowRoot.getElementById('kbd-backspace');
+    if (bsBtn) {
+      const sendBs = () => {
+        clearTimeout(this._t9Timer);
+        this._t9LastKey   = null;
+        this._t9LastCount = 0;
+        this._t9Active    = false;
+        this._send('KEY_BACKSPACE', false);
+      };
+      let bsTouched = false;
+      bsBtn.addEventListener('touchstart', e => { e.preventDefault(); bsTouched = true; sendBs(); }, { passive: false });
+      bsBtn.addEventListener('touchend',   e => { e.preventDefault(); setTimeout(() => { bsTouched = false; }, 300); }, { passive: false });
+      bsBtn.addEventListener('click', () => { if (!bsTouched) sendBs(); });
     }
 
-    // ── Keyboard letter/symbol buttons ────────────────────────────────────────
+    // ── Keyboard direct-key buttons (space, enter) ────────────────────────────
     if (kbdPanel) {
       kbdPanel.querySelectorAll('[data-kbd-key]').forEach(btn => {
         const sendKbd = () => {
-          if (this._shiftActive) {
-            this._send('KEY_LEFTSHIFT', false);
-            this._shiftActive = false;
-            if (shiftBtn) shiftBtn.classList.remove('shift-active');
-          }
+          clearTimeout(this._t9Timer);
+          this._t9LastKey   = null;
+          this._t9LastCount = 0;
+          this._t9Active    = false;
           this._send(btn.getAttribute('data-kbd-key'), false);
         };
         let touched = false;
-        btn.addEventListener('touchstart', e => {
-          e.preventDefault(); touched = true; sendKbd();
-        }, { passive: false });
-        btn.addEventListener('touchend', e => {
-          e.preventDefault(); setTimeout(() => { touched = false; }, 300);
-        }, { passive: false });
+        btn.addEventListener('touchstart', e => { e.preventDefault(); touched = true; sendKbd(); }, { passive: false });
+        btn.addEventListener('touchend',   e => { e.preventDefault(); setTimeout(() => { touched = false; }, 300); }, { passive: false });
         btn.addEventListener('click', () => { if (!touched) sendKbd(); });
+      });
+    }
+
+    // ── Keyboard char buttons (T9 multi-tap) ─────────────────────────────────
+    if (kbdPanel) {
+      kbdPanel.querySelectorAll('[data-kbd-char]').forEach(btn => {
+        const onPress = () => { this._t9Press(btn.getAttribute('data-kbd-char')); };
+        let touched = false;
+        btn.addEventListener('touchstart', e => { e.preventDefault(); touched = true; onPress(); }, { passive: false });
+        btn.addEventListener('touchend',   e => { e.preventDefault(); setTimeout(() => { touched = false; }, 300); }, { passive: false });
+        btn.addEventListener('click', () => { if (!touched) onPress(); });
       });
     }
 
@@ -795,6 +823,38 @@ class Enigma2RemoteCard extends HTMLElement {
       btn.addEventListener('mouseup',    () => clearTimeout(pressTimer));
       btn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
     });
+  }
+
+  _t9Press(char) {
+    const entry = T9_LOOKUP[char.toUpperCase()] || T9_LOOKUP[char.toLowerCase()] || T9_LOOKUP[char];
+    if (!entry) return;
+
+    const { key, count } = entry;
+    const digit = key.replace('KEY_', '');
+    const chars = T9_CHARS[digit];
+
+    clearTimeout(this._t9Timer);
+
+    if (this._t9Active && this._t9LastKey === key) {
+      // Same digit group — advance by one: backspace + one more press
+      this._t9LastCount = (this._t9LastCount % chars.length) + 1;
+      this._send('KEY_BACKSPACE', false);
+      this._send(key, false);
+    } else {
+      // New digit group — press the key `count` times to reach this char
+      this._t9LastKey   = key;
+      this._t9LastCount = count;
+      this._t9Active    = true;
+      for (let i = 0; i < count; i++) {
+        this._send(key, false);
+      }
+    }
+
+    this._t9Timer = setTimeout(() => {
+      this._t9LastKey   = null;
+      this._t9LastCount = 0;
+      this._t9Active    = false;
+    }, 1500);
   }
 
   _send(key, longPress = false) {
